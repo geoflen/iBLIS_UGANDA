@@ -28,14 +28,14 @@
 						array('class' => 'form-control')) }}
 				</div>
 				<div class="form-group">
-					{{ Form::label('ulin', trans('messages.ulin'), array('class' => 'required')) }}
+					{{ Form::label('ulin', 'Lab No.', array('class' => 'required')) }}
 					{{ Form::text('ulin', Input::old('ulin'),
 						array('class' => 'form-control')) }}
 				</div>
-				<div class="form-group">
+				<!--<div class="form-group">
 					{{ Form::label('nin', trans('messages.national-id')) }}
 					{{ Form::text('nin', Input::old('nin'), array('class' => 'form-control')) }}
-				</div>
+				</div>-->
 				<div class="form-group">
 					{{ Form::label('name', trans('messages.names'), array('class' => 'required')) }}
 					{{ Form::text('name', Input::old('name'), array('class' => 'form-control')) }}
@@ -64,6 +64,10 @@
 					{{ Form::text('village_residence', Input::old('village_residence'), array('class' => 'form-control')) }}
 				</div>
 				<div class="form-group">
+					{{ Form::label('phone_number', trans('messages.phone-number')) }}
+					{{ Form::text('phone_number', Input::old('phone_number'), array('class' => 'form-control')) }}
+				</div>
+				<!--<div class="form-group">
 					{{ Form::label('village_workplace', trans('messages.workplace-village')) }}
 					{{ Form::text('village_workplace', Input::old('village_workplace'), array('class'=>'form-control')) }}
 				</div>
@@ -75,18 +79,16 @@
 					{{ Form::label('occupation', trans('messages.occupation')) }}
 					{{ Form::text('occupation', Input::old('occupation'), array('class' => 'form-control')) }}
 				</div>
-				<div class="form-group">
-					{{ Form::label('phone_number', trans('messages.phone-number')) }}
-					{{ Form::text('phone_number', Input::old('phone_number'), array('class' => 'form-control')) }}
-				</div>
+
 				<div class="form-group">
 					{{ Form::label('email', trans('messages.email-address')) }}
 					{{ Form::email('email', Input::old('email'), array('class' => 'form-control')) }}
 				</div>
-				<div class="form-group actions-row">
-					{{ Form::button('<span class="glyphicon glyphicon-save"></span> '.trans('messages.save'),
-						['class' => 'btn btn-primary', 'onclick' => 'submit()']) }}
-				</div>
+			-->
+			<div class="form-group actions-row">
+				{{ Form::button('<span class="glyphicon glyphicon-save"></span> '.trans('messages.save'),
+					['class' => 'btn btn-primary', 'onclick' => 'submit()']) }}
+			</div>
 
 			{{ Form::close() }}
 		</div>
