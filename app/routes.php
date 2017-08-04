@@ -66,7 +66,7 @@ Route::group(array("before" => "auth"), function()
         "as" => "user.updateOwnPassword",
         "uses" => "UserController@updateOwnPassword"
         ));
-	Route::resource('bbincidence', 'BbincidenceController'); /* Added by Justus */
+//	Route::resource('bbincidence', 'BbincidenceController'); /* Added by Justus */
 
     //Unhls patient routes start here
     Route::resource('unhls_patient', 'UnhlsPatientController');
@@ -650,16 +650,26 @@ Route::group(array("before" => "auth"), function()
   Route::group(array("before" => "checkPerms:manage_incidents"), function()
   {
       Route::resource("bbincidence", "BbincidenceController");
+
       Route::get("/bbincidence/{id}/delete", array(
           "as"   => "bbincidence.delete",
           "uses" => "BbincidenceController@delete"
       ));
+      Route::any("/patientreport", array(
+              "as"   => "reports.patient.index",
+              "uses" => "ReportController@loadPatients"
+          ));
       Route::resource('bbincidence', 'BbincidenceController');
 
     	Route::get("/bbincidence/clinical/clinical", array(
             "as"   => "bbincidence.clinical",
             "uses" => "BbincidenceController@clinical"
         ));
+
+        Route::get("/bbincidence/clinical/clinical", array(
+              "as"   => "bbincidence.index",
+              "uses" => "BbincidenceController@index"
+          ));
 
     	Route::get("/bbincidence/{id}/clinicaledit", array(
             "as"   => "bbincidence.clinicaledit",
