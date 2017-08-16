@@ -707,6 +707,26 @@ Route::group(array("before" => "auth"), function()
         ));
 
   });
+  //Check if user can dispatch items
+  Route::group(array("before" => "checkPerms:track_samples"), function()
+  {
+      Route::resource("sampletracker", "SampleTrackersController");
+
+      Route::get("/sampletracker/{id}/delete", array(
+          "as"   => "sampletracker.delete",
+          "uses" => "SampleTrackersController@delete"
+      ));
+
+        Route::get("/sampletracker/index/index", array(
+              "as"   => "sampletracker.index",
+              "uses" => "SampleTrackersController@index"
+          ));
+          Route::get("/sampletracker/{id}/home", array(
+                "as"   => "sampletracker.home",
+                "uses" => "SampleTrackersController@home"
+            ));
+
+  });
 
     //Bike Management
     Route::resource('bike', 'BikeController');
