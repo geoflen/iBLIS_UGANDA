@@ -37,7 +37,7 @@ return array(
 	|
 	*/
 
-	'organization' => 'Laboratory Information Management System',
+	'organization' => 'JINJA REGIONAL REFERRAL HOSPITAL LABORATORY',
 	
 
 
@@ -47,7 +47,7 @@ return array(
 	|--------------------------------------------------------------------------
 	|
 	*/
-	'address-info' => 'P.O. BOX 7272, KAMPALA<br>',
+	'address' => 'P.O. BOX 43, JINJA, UGANDA.<br> Phone: +256 756802020<br>',
 	
 	/*
 	|--------------------------------------------------------------------------
@@ -60,8 +60,7 @@ return array(
 	'organization-logo' => '/i/coat_of_arms.png',
 	'uganda-logo' => '/i/uganda.png',
 	'cdc-logo' => '/i/cdc.png',
-	'aslm-logo' => '/i/aslm.png',
-	'aslmlogo'	=> '/i/aslmlogo.png',	
+	'aslmlogo' => '/i/aslm.png',		
 	
 	/*
 	|--------------------------------------------------------------------------

@@ -38,7 +38,8 @@ class SeedUpdater extends Command {
     public function fire()
     {
         Eloquent::unguard();
-        // FOR SCRIPT FIXES 
+        $superadmin = Role::find(1);
+        $superadmin->attachPermission(Permission::create(["name" => "manage_incidents", "display_name" => "Can Manage Biorisk & Biosecurity Incidents"]));
     }
 
     /**
