@@ -32,6 +32,13 @@ Route::group(array("before" => "guest"), function()
     Route::post('/api/saveresults', array(
         "uses" => "InterfacerController@saveTestResults"
     ));
+    // blisurl/api/saveresults?username=???&password=???&specimen_id?=1052&measure_id=68&result=5.23&dec=0
+    Route::get('/api/saveresults/{query?}', array(
+        "uses" => "InterfacerController@saveTestResultsFromInstrument"
+    ));
+    Route::get('/api/fetchrequests/{query?}', array(
+        "uses" => "InterfacerController@getTestRequestsForInstrument"
+    ));
     Route::any('/', array(
         "as" => "user.login",
         "uses" => "UserController@loginAction"
@@ -129,6 +136,68 @@ Route::group(array("before" => "auth"), function()
     {
         Route::resource('instrument', 'InstrumentController');
         Route::resource('ward', 'WardController');
+        Route::resource('testnamemapping', 'TestNameMappingController');
+        Route::resource('adhocconfig', 'AdhocConfigController');
+
+        Route::get("/measurenamemapping/create/{test_type_id}", array(
+            "as"   => "measurenamemapping.create",
+            "uses" => "MeasureNameMappingController@create"
+        ));
+        Route::get("/measurenamemapping/{id}/edit", array(
+            "as"   => "measurenamemapping.edit",
+            "uses" => "MeasureNameMappingController@edit"
+        ));
+        Route::get("/measurenamemapping/{id}/delete", array(
+            "as"   => "measurenamemapping.delete",
+            "uses" => "MeasureNameMappingController@delete"
+        ));
+        Route::post("/measurenamemapping/store", array(
+            "as"   => "measurenamemapping.store",
+            "uses" => "MeasureNameMappingController@store"
+        ));
+        Route::put("/measurenamemapping/{id}", array(
+            "as"   => "measurenamemapping.update",
+            "uses" => "MeasureNameMappingController@update"
+        ));
+        Route::get("/measureranges/{id}/ranges", array(
+            "as"   => "measureranges.getranges",
+            "uses" => "MeasureNameMappingController@getRanges"
+        ));
+        Route::get("/measureranges/{id}/range", array(
+            "as"   => "measureranges.getrange",
+            "uses" => "MeasureNameMappingController@getRange"
+        ));
+        Route::put("/measureranges/{id}/range", array(
+            "as"   => "measureranges.postrange",
+            "uses" => "MeasureNameMappingController@postRange"
+        ));
+
+        Route::get("/measureranges/{id}/negativegramstain", array(
+            "as"   => "measureranges.getnegativegramstain",
+            "uses" => "MeasureNameMappingController@getNegativeGramStain"
+        ));
+        Route::post("/measureranges/{id}/negativegramstain", array(
+            "as"   => "measureranges.postnegativegramstain",
+            "uses" => "MeasureNameMappingController@postNegativeGramStain"
+        ));
+        Route::get("/measureranges/{id}/{test_name_mapping_id}/negativegramstaindelete", array(
+            "as"   => "measureranges.deletenegativegramstain",
+            "uses" => "MeasureNameMappingController@deleteNegativeGramStain"
+        ));
+
+        Route::get("/measureranges/{id}/negativeorganism", array(
+            "as"   => "measureranges.getnegativeorganism",
+            "uses" => "MeasureNameMappingController@getNegativeOrganism"
+        ));
+        Route::post("/measureranges/{id}/negativeorganism", array(
+            "as"   => "measureranges.postnegativeorganism",
+            "uses" => "MeasureNameMappingController@postNegativeOrganism"
+        ));
+        Route::get("/measureranges/{id}/{test_name_mapping_id}/negativeorganismdelete", array(
+            "as"   => "measureranges.deletenegativeorganism",
+            "uses" => "MeasureNameMappingController@deleteNegativeOrganism"
+        ));
+
         Route::get("/instrument/{id}/delete", array(
             "as"   => "instrument.delete",
             "uses" => "InstrumentController@delete"
@@ -160,6 +229,54 @@ Route::group(array("before" => "auth"), function()
         "as"   => "unhls_test.create",
         "uses" => "UnhlsTestController@create"
     ));
+    /*Visit Management*/
+    Route::any("/visit", array(
+        "as"   => "visit.index",
+        "uses" => "VisitController@index"
+    ));
+    Route::get("/visit/show/{visit_id}", array(
+        "as"   => "visit.show",
+        "uses" => "VisitController@show"
+    ));
+    Route::get("/visit/create/{patient_id}", array(
+        "as"   => "visit.create",
+        "uses" => "VisitController@create"
+    ));
+    Route::post("/visit/store", array(
+        "as"   => "visit.store",
+        "uses" => "VisitController@store"
+    ));
+    Route::post("/visit/update/{visit_id}", array(
+        "as"   => "visit.update",
+        "uses" => "VisitController@update"
+    ));
+    Route::get("/visit/edit/{visit_id}", array(
+        "as"   => "visit.edit",
+        "uses" => "VisitController@edit"
+    ));
+    Route::get("/visit/destroy/{visit_id}", array(
+        "as"   => "visit.destroy",
+        "uses" => "VisitController@destroy"
+    ));
+    Route::post("/visit/testlist", array(
+        "as"   => "visit.testList",
+        "uses" => "VisitController@testList"
+    ));
+    Route::get("/visit/addtest/{visit_id}", array(
+        "as"   => "visit.addtest",
+        "uses" => "VisitController@getAddTest"
+    ));
+    Route::post("/visit/clinicianaddtest/{visit_id}", array(
+        "as"   => "visit.clinicianpostaddtest",
+        "uses" => "VisitController@clinicianPostAddTest"
+    ));
+    Route::post("/visit/technologistaddtest/{visit_id}", array(
+        "as"   => "visit.technologistpostaddtest",
+        "uses" => "VisitController@technologistPostAddTest"
+    ));
+
+
+    // Route::resource('labrequest', 'VisitController');
     Route::post("/unhls_test/savenewtest", array(
         "before" => "checkPerms:request_test",
         "as"   => "unhls_test.saveNewTest",
@@ -248,12 +365,14 @@ Route::group(array("before" => "auth"), function()
     Route::get("unhls_test/verified", array(
         "as" => "unhls_test.verified",
         "uses" => "UnhlsTestController@verified"));
-    //Test viewDetails start
     Route::get("/unhls_test/{test}/viewdetails", array(
         "as"   => "unhls_test.viewDetails",
         "uses" => "UnhlsTestController@viewDetails"
     ));
-    //Test viewDetail ends
+    Route::get("/unhls_test/{test}/delete", array(
+        "as"   => "unhls_test.delete",
+        "uses" => "UnhlsTestController@delete"
+    ));
     Route::any("/test/{test}/verify", array(
         "before" => "checkPerms:verify_test_results",
         "as"   => "test.verify",
@@ -338,6 +457,14 @@ Route::group(array("before" => "auth"), function()
             "as"   => "blisclient.properties",
             "uses" => "BlisClientController@properties"
         ));
+        Route::any("/reportconfig/dailyreport", array(
+            "as"   => "reportconfig.dailyreport",
+            "uses" => "DailyReportController@index"
+        ));
+        Route::any("/reportconfig/{date}/store", array(
+            "as"   => "reportconfig.store",
+            "uses" => "DailyReportController@store"
+        ));
     });
 
     //  Check if able to manage reports
@@ -381,6 +508,11 @@ Route::group(array("before" => "auth"), function()
             "as"   => "reports.aggregate.counts",
             "uses" => "ReportController@countReports"
         ));
+// new implementation
+        Route::any("/aggregate/counts", array(
+            "as"   => "reports.counts",
+            "uses" => "ReportController@counts"
+        ));
         Route::any("/tat", array(
             "as"   => "reports.aggregate.tat",
             "uses" => "ReportController@turnaroundTime"
@@ -398,6 +530,10 @@ Route::group(array("before" => "auth"), function()
         Route::any("/moh706", array(
             "as"   => "reports.aggregate.moh706",
             "uses" => "ReportController@moh706"
+        ));
+        Route::any("/hmis105/{month?}", array(
+            "as"   => "reports.aggregate.hmis105",
+            "uses" => "ReportController@hmis105"
         ));
 
         Route::any("/cd4", array(
@@ -420,6 +556,14 @@ Route::group(array("before" => "auth"), function()
         Route::post("/inventory", array(
             "as"   => "reports.inventory",
             "uses" => "ReportController@stockLevel"
+        ));
+        Route::get("/microbiology/search", array(
+            "as"   => "reports.microbiology.search",
+            "uses" => "ReportController@searchMicrobiology"
+        ));
+        Route::post("/microbiology/download", array(
+            "as"   => "reports.microbiology.download",
+            "uses" => "ReportController@downloadMicrobiology"
         ));
     });
     Route::group(array("before" => "checkPerms:manage_qc"), function()

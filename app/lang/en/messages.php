@@ -119,7 +119,7 @@ return array(
     'view-patients' => 'View Existing Patients', //Unhls entry
     'residence-village' => 'Village of Residence', //Unhls entry
     'sex' => 'Sex', //Unhls prefers this to Gender
-    'ulin' => 'Unique Lab Identification Number', //Unhls entry
+    'ulin' => 'ULIN',
     'workplace-village' => 'Village of Workplace', //Unhls entry
     
     /** 
@@ -153,7 +153,7 @@ return array(
     'specimen-number' => 'ID',
     'specimen-number-title' => 'Specimen ID',
     'specimen-not-collected' => 'Not Collected',
-    'specimen-not-collected-label' => 'Specimen Not Collected',
+    'specimen-not-received-label' => 'Specimen Not Received',
     'specimen-rejected' => 'Rejected',
     'specimen-rejected-at-analysis' => 'Specimen Rejected at Analysis',
     'specimen-rejected-label' => 'Specimen Rejected',
@@ -303,6 +303,15 @@ return array(
     'zone-size' =>  'Zone size (mm)',
     'interp'    =>  'Interpretation (S, I, R)',
     'set-to-completed' =>  'Set to Completed',
+
+    /**
+     *  Visits
+     */
+    'visit-status' => 'Status',
+    'appointment-made' => 'New Visits',
+    'test-request-made' => 'Lab Requests',
+    'specimen_received' => 'Pending Requests',
+    'tests-completed' => 'Lab Reports',
 
     /**
      *  Tests
