@@ -1,4 +1,4 @@
-<?php
+F<?php
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -31,13 +31,6 @@ Route::group(array("before" => "guest"), function()
     ));
     Route::post('/api/saveresults', array(
         "uses" => "InterfacerController@saveTestResults"
-    ));
-    // blisurl/api/saveresults?username=???&password=???&specimen_id?=1052&measure_id=68&result=5.23&dec=0
-    Route::get('/api/saveresults/{query?}', array(
-        "uses" => "InterfacerController@saveTestResultsFromInstrument"
-    ));
-    Route::get('/api/fetchrequests/{query?}', array(
-        "uses" => "InterfacerController@getTestRequestsForInstrument"
     ));
     Route::any('/', array(
         "as" => "user.login",
@@ -73,7 +66,7 @@ Route::group(array("before" => "auth"), function()
         "as" => "user.updateOwnPassword",
         "uses" => "UserController@updateOwnPassword"
         ));
-	Route::resource('bbincidence', 'BbincidenceController'); /* Added by Justus */
+    Route::resource('bbincidence', 'BbincidenceController'); /* Added by Justus */
 
     //Unhls patient routes start here
     Route::resource('unhls_patient', 'UnhlsPatientController');
@@ -85,7 +78,60 @@ Route::group(array("before" => "auth"), function()
         "as"   => "unhls_patient.search",
         "uses" => "UnhlsPatientController@search"
     ));
+
+
+    //POC routes start here
+    Route::resource('poc', 'PocController');
+    Route::get("/poc/{id}/delete", array(
+        "as"   => "poc.delete",
+        "uses" => "PocController@delete"
+    ));
+    Route::post("/poc/search", array(
+        "as"   => "poc.search",
+        "uses" => "PocController@search"
+    ));
+
+    Route::get("/poc/{id}/edit", array(
+        "as"   => "poc.edit",
+        "uses" => "PocController@edit"
+    ));
+
+    Route::put("/poc/{id}/update", array(
+        "as"   => "poc.update",
+        "uses" => "PocController@update"
+    ));
+
+    Route::get("/poc/enter_results/{patient_id}/", array(
+        "as"   => "poc.enter_results",
+        "uses" => "PocController@enter_results"
+    ));
+
+    Route::post("/poc/save_results/{patient_id}/", array(
+        "as"   => "poc.save_results",
+        "uses" => "PocController@save_results"
+    ));
+
+    Route::get("/poc_download/", array(
+        "as"   => "poc.download",
+        "uses" => "PocController@download"
+    ));
+
+    Route::get("unhls_test/importPoc", array(
+        "as" => "unhls_test.importPoc",
+        "uses" => "UnhlsTestController@importPoc"));
+
+    Route::post("unhls_test/uploadPoCResults", array(
+        "as" => "unhls_test.uploadPoCResults",
+        "uses" => "UnhlsTestController@uploadPoCResults"));
+
     //Unhls patiend routes end
+
+    Route::get("/eid_patient", array(
+        "as" => "eid_patient.create",
+        "uses" => "UnhlsPatientController@createEid"));
+
+    //Unhls patient routes end
+
     Route::any("/instrument/getresult", array(
         "as"   => "instrument.getResult",
         "uses" => "InstrumentController@getTestResult"
@@ -137,7 +183,6 @@ Route::group(array("before" => "auth"), function()
         Route::resource('instrument', 'InstrumentController');
         Route::resource('ward', 'WardController');
         Route::resource('testnamemapping', 'TestNameMappingController');
-        Route::resource('adhocconfig', 'AdhocConfigController');
 
         Route::get("/measurenamemapping/create/{test_type_id}", array(
             "as"   => "measurenamemapping.create",
@@ -187,59 +232,12 @@ Route::group(array("before" => "auth"), function()
         "as"   => "test.receive",
         "uses" => "UnhlsTestController@receive"
     ));
+
     Route::any("/unhls_test/create/{patient?}", array(
         "before" => "checkPerms:request_test",
         "as"   => "unhls_test.create",
         "uses" => "UnhlsTestController@create"
     ));
-    /*Visit Management*/
-    Route::any("/visit", array(
-        "as"   => "visit.index",
-        "uses" => "VisitController@index"
-    ));
-    Route::get("/visit/show/{visit_id}", array(
-        "as"   => "visit.show",
-        "uses" => "VisitController@show"
-    ));
-    Route::get("/visit/create/{patient_id}", array(
-        "as"   => "visit.create",
-        "uses" => "VisitController@create"
-    ));
-    Route::post("/visit/store", array(
-        "as"   => "visit.store",
-        "uses" => "VisitController@store"
-    ));
-    Route::post("/visit/update/{visit_id}", array(
-        "as"   => "visit.update",
-        "uses" => "VisitController@update"
-    ));
-    Route::get("/visit/edit/{visit_id}", array(
-        "as"   => "visit.edit",
-        "uses" => "VisitController@edit"
-    ));
-    Route::get("/visit/destroy/{visit_id}", array(
-        "as"   => "visit.destroy",
-        "uses" => "VisitController@destroy"
-    ));
-    Route::post("/visit/testlist", array(
-        "as"   => "visit.testList",
-        "uses" => "VisitController@testList"
-    ));
-    Route::get("/visit/addtest/{visit_id}", array(
-        "as"   => "visit.addtest",
-        "uses" => "VisitController@getAddTest"
-    ));
-    Route::post("/visit/clinicianaddtest/{visit_id}", array(
-        "as"   => "visit.clinicianpostaddtest",
-        "uses" => "VisitController@clinicianPostAddTest"
-    ));
-    Route::post("/visit/technologistaddtest/{visit_id}", array(
-        "as"   => "visit.technologistpostaddtest",
-        "uses" => "VisitController@technologistPostAddTest"
-    ));
-
-
-    // Route::resource('labrequest', 'VisitController');
     Route::post("/unhls_test/savenewtest", array(
         "before" => "checkPerms:request_test",
         "as"   => "unhls_test.saveNewTest",
@@ -328,14 +326,12 @@ Route::group(array("before" => "auth"), function()
     Route::get("unhls_test/verified", array(
         "as" => "unhls_test.verified",
         "uses" => "UnhlsTestController@verified"));
+    //Test viewDetails start
     Route::get("/unhls_test/{test}/viewdetails", array(
         "as"   => "unhls_test.viewDetails",
         "uses" => "UnhlsTestController@viewDetails"
     ));
-    Route::get("/unhls_test/{test}/delete", array(
-        "as"   => "unhls_test.delete",
-        "uses" => "UnhlsTestController@delete"
-    ));
+    //Test viewDetail ends
     Route::any("/test/{test}/verify", array(
         "before" => "checkPerms:verify_test_results",
         "as"   => "test.verify",
@@ -435,7 +431,7 @@ Route::group(array("before" => "auth"), function()
     {
         Route::resource('reports', 'ReportController');
 
-		Route::any("/patientreport", array(
+        Route::any("/patientreport", array(
             "as"   => "reports.patient.index",
             "uses" => "ReportController@loadPatients"
         ));
@@ -519,14 +515,6 @@ Route::group(array("before" => "auth"), function()
         Route::post("/inventory", array(
             "as"   => "reports.inventory",
             "uses" => "ReportController@stockLevel"
-        ));
-        Route::get("/microbiology/search", array(
-            "as"   => "reports.microbiology.search",
-            "uses" => "ReportController@searchMicrobiology"
-        ));
-        Route::post("/microbiology/download", array(
-            "as"   => "reports.microbiology.download",
-            "uses" => "ReportController@downloadMicrobiology"
         ));
     });
     Route::group(array("before" => "checkPerms:manage_qc"), function()
@@ -753,7 +741,7 @@ Route::group(array("before" => "auth"), function()
         //Route::get('api/facility-by-district/{districtId}', 'ApiController@getFacilityListByDistrict');
 
     });
-	//Check if user can manage BB Incidents
+    //Check if user can manage BB Incidents
   Route::group(array("before" => "checkPerms:manage_incidents"), function()
   {
       Route::resource('bbincidence', 'BbincidenceController');
@@ -768,12 +756,12 @@ Route::group(array("before" => "auth"), function()
       ));
       Route::resource('bbincidence', 'BbincidenceController');
 
-    	Route::get("/bbincidence/clinical/clinical", array(
+        Route::get("/bbincidence/clinical/clinical", array(
             "as"   => "bbincidence.clinical",
             "uses" => "BbincidenceController@clinical"
         ));
 
-    	Route::get("/bbincidence/{id}/clinicaledit", array(
+        Route::get("/bbincidence/{id}/clinicaledit", array(
             "as"   => "bbincidence.clinicaledit",
             "uses" => "BbincidenceController@clinicaledit"
         ));
@@ -864,7 +852,7 @@ Route::group(array("before" => "auth"), function()
         "uses" => "EventController@eventfilter"
     ));
 
-	 Route::resource('unhls_els', 'UnhlsElsController');
+     Route::resource('unhls_els', 'UnhlsElsController');
 
     Route::get("/equipmentbreakdown/{id}/restore", array(
         "as"   => "equipmentbreakdown.restore",

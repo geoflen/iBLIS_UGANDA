@@ -57,7 +57,11 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'iblis',
 			'username'  => 'root',
+<<<<<<< HEAD:app/config/database.php
 			'password'  => '#mubende!17',
+=======
+			'password'  => 'xx',
+>>>>>>> poc:app/config/database.example.php
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

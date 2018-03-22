@@ -134,5 +134,74 @@ class MeasureNameMappingController extends \BaseController {
 			->with('message', 'Successfully Deleted Measure Name Mapping');
 	}
 
+	public function getRanges($id)
+	{
+		$measure = Measure::find($id);
+		return View::make('testnamemapping.measurenamemapping.ranges')
+				->with('measure', $measure);
+	}
+
+	public function getRange($id)
+	{
+		$measureRange = MeasureRange::find($id);
+		$resultInterpretations = ResultInterpretation::orderBy('id','DESC')->lists('name', 'id');
+
+		return View::make('testnamemapping.measurenamemapping.range')
+				->with('resultInterpretations', $resultInterpretations)
+				->with('measureRange', $measureRange);
+	}
+
+	public function postRange($id)
+	{
+		// Update
+		$measureRange = MeasureRange::find($id);
+		$measureRange->result_interpretation_id = Input::get('result_interpretation_id');
+		$measureRange->save();
+		// redirect
+		return Redirect::route('measureranges.getranges', [$measureRange->measure->id])
+		->with('message', 'Successfully Updated Measure Range Interpretation');
+	}
+
+	public function getNegativeGramStain($test_name_mapping_id)
+	{
+		$gramStainRanges = GramStainRange::orderBy('id','DESC')->lists('name', 'id');
+		return View::make('testnamemapping.measurenamemapping.negativegramstain')
+			->with('test_name_mapping_id', $test_name_mapping_id)
+			->with('gramStainRanges', $gramStainRanges);
+	}
+	public function postNegativeGramStain($test_name_mapping_id)
+	{
+		$negativeGramStain = new DailyNegativeGramStain;
+		$negativeGramStain->gram_stain_range_id = Input::get('gram_stain_range_id');
+		$negativeGramStain->save();
+		return Redirect::route('testnamemapping.show', [$test_name_mapping_id]);
+	}
+	public function deleteNegativeGramStain($id,$test_name_mapping_id)
+	{
+		$negativeGramStain = DailyNegativeGramStain::find($id);
+		$negativeGramStain->delete();
+		return Redirect::route('testnamemapping.show', [$test_name_mapping_id]);
+	}
+
+	public function getNegativeOrganism($test_name_mapping_id)
+	{
+		$organisms = Organism::orderBy('id','DESC')->lists('name', 'id');
+		return View::make('testnamemapping.measurenamemapping.negativeorganism')
+			->with('test_name_mapping_id', $test_name_mapping_id)
+			->with('organisms', $organisms);
+	}
+	public function postNegativeOrganism($test_name_mapping_id)
+	{
+		$negativeOrganism = new DailyNegativeCulture;
+		$negativeOrganism->organism_id = Input::get('organism_id');
+		$negativeOrganism->save();
+		return Redirect::route('testnamemapping.show', [$test_name_mapping_id]);
+	}
+	public function deleteNegativeOrganism($id,$test_name_mapping_id)
+	{
+		$negativeOrganism = DailyNegativeCulture::find($id);
+		$negativeOrganism->delete();
+		return Redirect::route('testnamemapping.show', [$test_name_mapping_id]);
+	}
 
 }

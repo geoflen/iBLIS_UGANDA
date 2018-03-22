@@ -9,7 +9,7 @@ return array(
 	*/
 
 	'name' => 'A-LIS',
-	
+
 	/*
 	|--------------------------------------------------------------------------
 	|	Application Version
@@ -37,8 +37,13 @@ return array(
 	|
 	*/
 
+<<<<<<< HEAD
 	'organization' => 'Mubende Regional Referral Hospital',
 	
+=======
+	'organization' => 'Laboratory Information Management System',
+
+>>>>>>> poc
 
 
 	/*
@@ -47,8 +52,13 @@ return array(
 	|--------------------------------------------------------------------------
 	|
 	*/
+<<<<<<< HEAD
 	'address-info' => 'P.O. BOX 4, MUBENDE<br>',
 	
+=======
+	'address-info' => 'Plot No. 1 Kamwenge Road, P.O. BOX 10, Kabarole<br>',
+
+>>>>>>> poc
 	/*
 	|--------------------------------------------------------------------------
 	|	Organization Logo
@@ -61,8 +71,8 @@ return array(
 	'uganda-logo' => '/i/uganda.png',
 	'cdc-logo' => '/i/cdc.png',
 	'aslm-logo' => '/i/aslm.png',
-	'aslmlogo'	=> '/i/aslmlogo.png',	
-	
+	'aslmlogo'	=> '/i/aslmlogo.png',
+
 	/*
 	|--------------------------------------------------------------------------
 	|	Pagination: Items to show per page
@@ -77,7 +87,7 @@ return array(
 	|	Sanitas inbound results URL
 	*/
 	'sanitas-url' => 'localhost',
-	
+
 	/*
 	|--------------------------------------------------------------------------
 	|	Limit: Maximum number of items to return (Use in patient search)
