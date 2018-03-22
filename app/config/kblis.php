@@ -37,7 +37,7 @@ return array(
 	|
 	*/
 
-	'organization' => 'Laboratory Information Management System',
+	'organization' => 'Mubende Regional Referral Hospital',
 	
 
 
@@ -47,7 +47,7 @@ return array(
 	|--------------------------------------------------------------------------
 	|
 	*/
-	'address-info' => 'P.O. BOX 7272, KAMPALA<br>',
+	'address-info' => 'P.O. BOX 4, MUBENDE<br>',
 	
 	/*
 	|--------------------------------------------------------------------------
