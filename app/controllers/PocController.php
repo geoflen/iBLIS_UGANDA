@@ -317,7 +317,7 @@ $patient->created_by = Auth::user()->name;
 		}
 	}
 
-	private function csv_download($fro, $to){
+	private function csv_download($fro, $today){
 		$patients = POC::leftjoin('poc_results as pr', 'pr.patient_id', '=', 'poc_tables.id')
 						->select('poc_tables.*','pr.results', 'pr.test_date')
 						->from('poc_tables')
@@ -325,8 +325,9 @@ $patient->created_by = Auth::user()->name;
 						->where('test_date','<=',$today)
 						->get();
 		header('Content-Type: text/csv; charset=utf-8');
-		header("Content-Disposition: attachment; filename=eid_poc_date_$fro"."_$to.csv");
-		$output = fopen('php://output', 'w');
+		header('Content-Disposition: attachment; filename=pocdata.csv');
+		
+$output = fopen('php://output', 'w');
 		$headers = array(
 				'Infant Name',
 				'Gender',

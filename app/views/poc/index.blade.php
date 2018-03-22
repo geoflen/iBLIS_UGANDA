@@ -53,7 +53,9 @@
 					<th>Age In Months</th>
 					<th>PCR Status</th>
 					<th>Mother's PMTCT ARV</th>
+					<th>Entry Point</th>
 					<th>EID Test Result</th>
+					<th>Test Date</th>
 					<th>{{trans('messages.actions')}}</th>
 				</tr>
 			</thead>
@@ -78,11 +80,9 @@
 					@else
 					<td>{{ $patient->entry_point}}</td>
 					@endif
-					<td>{{ $patient->infant_pmtctarv}}</td>
 					<td>{{ $patient->results}}</td>
 					<td>{{ $patient->test_date}}</td>
-					<td>{{ $patient->results }}</td>
-					<td>{{ $patient->test_date }}</td>
+				
 
 					<td>
 
@@ -93,7 +93,7 @@
 						</a>
 						@endif
 
-						@if($patient->results != '')
+					
 						<!-- show the patient (uses the show method found at GET /patient/{id} -->
 						<a class="btn btn-sm btn-success" href="{{ URL::route('poc.show', array($patient->id)) }}" >
 							<span class="glyphicon glyphicon-eye-open"></span>
@@ -102,14 +102,14 @@
 
 
 
-						@else
+						
 						<!-- edit this patient (uses the edit method found at GET /patient/{id}/edit -->
 						<a class="btn btn-sm btn-info" href="{{ URL::route('poc.edit', array($patient->id)) }}" >
 							<span class="glyphicon glyphicon-edit"></span>
 							{{trans('messages.edit')}}
 						</a>
 						</a>
-@endif
+
 					</td>
 				</tr>
 				<?php $row++; ?>

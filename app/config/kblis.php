@@ -37,13 +37,13 @@ return array(
 	|
 	*/
 
-<<<<<<< HEAD
+
 	'organization' => 'Mubende Regional Referral Hospital',
 	
-=======
+
 	'organization' => 'Laboratory Information Management System',
 
->>>>>>> poc
+
 
 
 	/*
@@ -52,13 +52,9 @@ return array(
 	|--------------------------------------------------------------------------
 	|
 	*/
-<<<<<<< HEAD
 	'address-info' => 'P.O. BOX 4, MUBENDE<br>',
 	
-=======
-	'address-info' => 'Plot No. 1 Kamwenge Road, P.O. BOX 10, Kabarole<br>',
 
->>>>>>> poc
 	/*
 	|--------------------------------------------------------------------------
 	|	Organization Logo

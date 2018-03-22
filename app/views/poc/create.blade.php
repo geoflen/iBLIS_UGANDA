@@ -86,8 +86,8 @@
 			</div>
 
 			<div class="form-group">
-				{{ Form::label('other_entry_point', 'Other Entry Point(other than above):',array('class' =>'col-sm-2')) }}
-				{{ Form::text('other_entry_point', Input::old('other_entry_point'), array('class' => 'form-control col-sm-4')) }}
+				{{ Form::label('entry_point', 'Other Entry Point(other than above):',array('class' =>'col-sm-2')) }}
+				{{ Form::text('entry_point', Input::old('entry_point'), array('class' => 'form-control col-sm-4')) }}
 			</div>
 
 			<div class="form-group">

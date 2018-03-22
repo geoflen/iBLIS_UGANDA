@@ -29,17 +29,14 @@
 				</div>
 				<div class="form-group">
 					{{ Form::label('ulin', trans('messages.ulin'), array('class' => 'required')) }}
-<<<<<<< HEAD
-					{{ Form::text('ulin', '',
-						array('class' => 'form-control', 'readonly' =>'true', 'placeholder' => 'Auto generated upon succesfull save!')) }}
-=======
+
 					@if($ulinFormat == 'Manual')
 					{{ Form::text('ulin', Input::old('ulin'),array('class' => 'form-control')) }}
 					@else
 					{{ Form::text('ulin', '',
 						array('class' => 'form-control', 'readonly' =>'true', 'placeholder' => 'Auto generated upon succesfull save!')) }}
 					@endif
->>>>>>> poc
+
 				</div>
 				<div class="form-group">
 					{{ Form::label('nin', trans('messages.national-id')) }}
