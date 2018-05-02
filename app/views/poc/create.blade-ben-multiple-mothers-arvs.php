@@ -37,8 +37,8 @@
 				<div class="form-group">
 					{{ Form::label('infant_name', 'Infant Name', array('class' =>'col-sm-2 required ')) }}
 					{{ Form::text('infant_name', Input::old('infant_name'), array('class' => 'form-control col-sm-4')) }}
-                    {{ Form::label('opdid', 'OPD/IPD No.', array('class' =>'col-sm-2 required ')) }}
-					{{ Form::text('opdid', Input::old('opdid'), array('class' => 'form-control col-sm-4')) }}
+                    {{ Form::label('refno', 'Ref No', array('class' =>'col-sm-2 required ')) }}
+					{{ Form::text('refno', Input::old('refno'), array('class' => 'form-control col-sm-4')) }}
 				</div>
 
 				<div class="form-group">
@@ -101,7 +101,7 @@
 
 			<div class="form-group">
 
-				{{ Form::label('mother_name', "Mother's Name", array('class' =>'col-sm-2 ')) }}
+				{{ Form::label('mother_name', 'Mothers Name', array('class' =>'col-sm-2 ')) }}
 				{{ Form::text('mother_name', Input::old('mother_name'), array('class' => 'form-control col-sm-4')) }}
 <!--
 				{{ Form::label('mother_hiv_status', 'Mothers HIV Status', array('class' =>'col-sm-2 ')) }}
@@ -114,7 +114,7 @@
 						</span>
 				@endif -->
 
-				{{ Form::label('mother_hiv_status', "Mother's HIV Status", array('class' =>'col-sm-2')) }}
+				{{ Form::label('mother_hiv_status', 'Mothers HIV Status', array('class' =>'col-sm-2')) }}
 				<div class="radio-inline">{{ Form::radio("mother_hiv_status", 'Positive', false) }} <span class="input-tag">Positive</span></div>
 				<div class="radio-inline">{{ Form::radio('mother_hiv_status', 'Negative', false) }} <span class="input-tag">Negative</span></div>
 				<div class="radio-inline">{{ Form::radio("mother_hiv_status", 'Unknown', false) }} <span class="input-tag">Unknown</span></div>
@@ -144,14 +144,12 @@
 				<br>
 
 				<div class="form-group">
-			<span>If Mother is HIV positive, Mother's PMTCT ARV's (Select & check circle)</span>
-			<br>
-			<br>
+					<span>If Mother is HIV positive, Mother's PMTCT ARV's (Select all that apply)</span>
+					<br>
+					<br>
+				</div>
 
-		
-		</div>
-
-		<div class="form-group">
+		 <div class="form-group">
 					<!--{{ Form::label('pmtct_delivery', 'PMTCT Delivery:',array('class' =>'col-sm-2 required ')) }}
 					{{ Form::select('pmtct_delivery', array_merge(array(null => 'Select...	'), $antenatal), Input::old('pmtct_delivery'), array('class' => 'form-control')) }}
 				</div> -->
@@ -183,7 +181,7 @@
 					<div class="radio-inline">{{ Form::radio("pmtct_postnatal", 'Unknown', false) }} <span class="input-tag">Unknown</span></div>
 
 
-</div>
+				</div>
 				<br>
 				<br>
 
@@ -192,11 +190,11 @@
 				<br>
 				<div class="form-group">
 
-					{{ Form::label('infant_pmtctarv', 'Infant PMTCT ARV Status:',array('class' =>'col-sm-2 required ')) }}
+					{{ Form::label('infant_pmtctarv', 'Infant PMTCTARV Status:',array('class' =>'col-sm-2 required ')) }}
 					<div class="radio-inline">{{ Form::radio("infant_pmtctarv", 'Daily NVP from birth to 6 weeks',false) }} <span class="input-tag">Daily NVP from birth to 6 weeks</span></div>
 					<div class="radio-inline">{{ Form::radio("infant_pmtctarv", 'NVP for 12 weeks for high risk infants', false) }} <span class="input-tag">NVP for 12 weeks for high risk infants</span></div>
 					<div class="radio-inline">{{ Form::radio("infant_pmtctarv", 'No ARVs taken at birth', false) }} <span class="input-tag">No ARVs taken at birth</span></div>
-					<div class="radio-inline">{{ Form::radio("infant_pmtctarv", 'Unknown', false) }} <span class="input-tag">Unknown</span></div>
+					<div class="radio-inline">{{ Form::radio("infant_pmtctarv", 'UNKNOWN', false) }} <span class="input-tag">unknown</span></div>
 					<br>
 					<br>
 				</div>
@@ -210,21 +208,15 @@
 						{{ Form::label('sample_id', 'Sample ID:',array('class' =>'col-sm-2 required ')) }}
 						{{ Form::text('sample_id', Input::old('sample_id'), array('class' => 'form-control col-sm-4')) }}
 
-					</div>
-					<div class="form-group">
-						{{ Form::label('received_by', 'Received By:',array('class' =>'col-sm-2 required ')) }}
-						{{ Form::text('received_by', Input::old('received_by'), array('class' => 'form-control col-sm-4')) }}
-
 						{{ Form::label('collection_date', 'Sample Collection Date:', array('class' =>'col-sm-2 ')) }}
 						{{ Form::text('collection_date', Input::old('collection_date'), array('class' => 'form-control standard-datepicker standard-datepicker-nofuture col-sm-4', 'placeholder' => 'YYYY-MM-DD')) }}
 					</div>
-					
 					<div class="form-group">
 						{{ Form::label('requesting_officer', 'Requesting Clinician:', array('class' =>'col-sm-2 ')) }}
-						{{ Form::text('requesting_officer', Input::old('requesting_officer'), array('class' => 'form-control col-sm-4' )) }}
+						{{ Form::text('requesting_officer', Auth::user()->name, array('class' => 'form-control col-sm-4' )) }}
 
 						{{ Form::label('clinician_phone', 'Mobile Number:', array('class' =>'col-sm-2 ')) }}
-						{{ Form::text('clinician_phone', Input::old('clinician_phone'), array('class' => 'form-control col-sm-4')) }}
+						{{ Form::text('clinician_phone', Auth::user()->phone_contact, array('class' => 'form-control col-sm-4')) }}
 						<!-- {{ Form::text('collection_date', Input::old('collection_date'), array('class' => 'form-control standard-datepicker col-sm-4', 'placeholder' => 'DD/ MM /YYYY')) }} -->
 					</div>
 					<br>

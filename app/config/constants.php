@@ -2,11 +2,12 @@
 
 return [
 
-    'DISTRICT_ID' => '1',
-    'DISTRICT_NAME' => 'KABAROLE',
+    'DISTRICT_ID' => '70',
+    'DISTRICT_NAME' => 'KOBOKO',
     'FACILITY_LEVEL_ID' => '2',
     'FACILITY_ID' => '1',
-    'FACILITY_NAME' => 'FORT PORTAL REGIONAL REFERRAL HOSPITAL',
+    'FACILITY_NAME' => 'KOBOKO HC IV',
+	'TESTING_DEVICE' => 'Alere Q',
     'FACILITY_CODE' => 'LBK1',
     'FACILITY_OWNERSHIP_ID' => '1',
     'FIN_YEAR_ID' => '1',

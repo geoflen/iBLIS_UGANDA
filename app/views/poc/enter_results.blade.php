@@ -10,7 +10,7 @@
 </div>
 <div class="panel panel-primary">
 	<div class="panel-heading ">
-		Facility:: {{Auth::user()->facility->name}} || Level:: {{Auth::user()->facility->level->level}} || {{Auth::user()->facility->district->name}}
+		Facility:: {{ \Config::get('constants.FACILITY_NAME') }} || DISTRICT:: {{ \Config::get('constants.DISTRICT_NAME') }}
 	</div>
 	<div class="panel-body">
 
@@ -46,17 +46,32 @@
 					<div class="radio-inline">{{ Form::radio("results", 'Negative', false) }} <span class="input-tag">Negative</span></div>
 					<div class="radio-inline">{{ Form::radio("results", 'Error', false) }} <span class="input-tag">Error</span></div>
 				</div>
-
+				
 				<div class="form-group">
 					{{ Form::label('error_code', 'Error Code:', array('class' =>'col-sm-2 ')) }}
-					{{ Form::text('error_code', Input::old('error_code'), array('class' => 'form-control  col-sm-4')) }}
-				</div>
+					{{ Form::text('error_code', Input::old('error_code'), array('class' => 'form-control  col-sm-4', 'placeholder' => 'In case of error, enter error code')) }}
 
+				</div>
+				
 				<div class="form-group">
 					{{ Form::label('test_date', 'Test Date:', array('class' =>'col-sm-2 ')) }}
 					{{ Form::text('test_date', Input::old('test_date'), array('class' => 'form-control standard-datepicker  col-sm-4')) }}
 				</div>
+				
+				<div class="form-group">
+					{{ Form::label('reviewed_by', 'Results reviewed and dispatched by:', array('class' =>'col-sm-2 ')) }}
+					{{ Form::text('reviewed_by', Input::old('reviewed_by'), array('class' => 'form-control  col-sm-4')) }}
 
+				</div>
+                <div class="form-group">
+					{{ Form::label('review_date', 'Reviewed and Dispatched on:', array('class' =>'col-sm-2 ')) }}
+					{{ Form::text('review_date', Input::old('review_date'), array('class' => 'form-control standard-datepicker  col-sm-4')) }}
+				</div>
+				<div class="form-group">
+					{{ Form::label('testing_device', 'Testing Device:', array('class' =>'col-sm-2 ')) }}
+					{{ Form::text('testing_device', \Config::get('constants.TESTING_DEVICE'), array('class' => 'form-control  col-sm-4','readonly' => 'readonly')) }}
+
+				</div>
 				
 
 			<div class="form-group actions-row">
@@ -66,8 +81,7 @@
 			{{ Form::close() }}
 			<script>
 			$(".standard-datepicker-nofuture").datepicker({
-				 maxDate: new Date(),
-				 dateFormat: "yy-mm-dd"
+				maxDate: 0
 			});
 		</script>
 

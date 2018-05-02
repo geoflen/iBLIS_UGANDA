@@ -47,7 +47,7 @@
                     <p class="view"><strong>Infant's PMTCT ARVs:</strong> {{$patient->infant_pmtctarv}}
                     <p class="view-striped"><strong>Mother's Name:</strong>{{ $patient->mother_name }}</p>
                     <p class="view-striped"><strong>Mother's HIV Status:</strong>{{ $patient-> mother_hiv_status}}</p>
-                    <p class="view-striped"><strong>Mother's PMTCTARV's <i>(If mother is HIV positive)</i>:</strong><i>Antenatal:: </i><strong>{{ $patient->pmtct_antenatal }} </strong> || <i>Delivery:: </i> <strong>{{ $patient->pmtct_delivery }} </strong> || <i>Postnantal:: </i> <strong> {{ $patient->pmtct_postnatal }} </strong></p>
+                    <p class="view-striped"><strong>Mother's PMTCTARV's <i>(If mother is HIV positive)</i></strong> {{$patient->mother_pmtctarv}}</p>
 
                 <p class="view"><strong>{{ trans('messages.date-created') }}</strong>
                     {{ $patient->created_at }}</p>

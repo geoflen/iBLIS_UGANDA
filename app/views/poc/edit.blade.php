@@ -38,6 +38,8 @@
 				<div class="form-group">
 					{{ Form::label('infant_name', 'Infant Name', array('class' =>'col-sm-2 required ')) }}
 					{{ Form::text('infant_name', Input::old('infant_name'), array('class' => 'form-control col-sm-4')) }}
+					{{ Form::label('opdid', 'OPD/IPD No.', array('class' =>'col-sm-2 required ')) }}
+					{{ Form::text('opdid', Input::old('opdid'), array('class' => 'form-control col-sm-4')) }}
 				</div>
 
 				<div class="form-group">
@@ -52,6 +54,8 @@
 
 				{{ Form::label('age', 'Age', array('class' =>'col-sm-2 required ')) }}
 				{{ Form::text('age', Input::old('age'), array('class' => 'form-control col-sm-4', 'placeholder' => '(In months)')) }}
+				 {{ Form::label('dob', 'DOB', array('class' =>'col-sm-2 ')) }}
+				{{ Form::text('dob', Input::old('dob'), array('class' => 'form-control standard-datepicker standard-datepicker-nofuture col-sm-4', 'placeholder' => 'date of birth', )) }}
 			</div>
 
 
@@ -100,10 +104,10 @@
 
 			<div class="form-group">
 
-				{{ Form::label('mother_name', 'Mothers Name', array('class' =>'col-sm-2 ')) }}
+				{{ Form::label('mother_name', "Mother's Name", array('class' =>'col-sm-2 ')) }}
 				{{ Form::text('mother_name', Input::old('mother_name'), array('class' => 'form-control col-sm-4')) }}
 
-				{{ Form::label('mother_hiv_status', 'Mothers HIV Status', array('class' =>'col-sm-2')) }}
+				{{ Form::label('mother_hiv_status', "Mother's HIV Status", array('class' =>'col-sm-2')) }}
 				<div class="radio-inline">{{ Form::radio("mother_hiv_status", 'Positive', false) }} <span class="input-tag">Positive</span></div>
 				<div class="radio-inline">{{ Form::radio('mother_hiv_status', 'Negative', false) }} <span class="input-tag">Negative</span></div>
 				<div class="radio-inline">{{ Form::radio("mother_hiv_status", 'Unknown', false) }} <span class="input-tag">Unknown</span></div>
@@ -163,7 +167,7 @@
 			<div class="radio-inline">{{ Form::radio("pmtct_postnatal", 'Unknown', false) }} <span class="input-tag">Unknown</span></div>
 
 
-		</div>
+</div>
 		<br>
 		<br>
 
@@ -187,20 +191,26 @@
 	<div class="panel-body">
 
 		<div class="form-group">
-			{{ Form::label('sample_id', 'Sample ID:',array('class' =>'col-sm-2 required ')) }}
-			{{ Form::text('sample_id', Input::old('sample_id'), array('class' => 'form-control col-sm-4')) }}
+						{{ Form::label('sample_id', 'Sample ID:',array('class' =>'col-sm-2 required ')) }}
+						{{ Form::text('sample_id', Input::old('sample_id'), array('class' => 'form-control col-sm-4')) }}
 
-			{{ Form::label('collection_date', 'Sample Collection Date:', array('class' =>'col-sm-2 ')) }}
-			{{ Form::text('collection_date', Input::old('collection_date'), array('class' => 'form-control standard-datepicker col-sm-4', 'placeholder' => 'DD/ MM /YYYY')) }}
-</div>
-		<div class="form-group">
-			{{ Form::label('requesting_officer', 'Requesting Clinician:', array('class' =>'col-sm-2 ')) }}
-			{{ Form::text('requesting_officer', Auth::user()->name, array('class' => 'form-control col-sm-4', 'readonly')) }}
+					</div>
+					<div class="form-group">
+						{{ Form::label('received_by', 'Received By:',array('class' =>'col-sm-2 required ')) }}
+						{{ Form::text('received_by', Input::old('received_by'), array('class' => 'form-control col-sm-4')) }}
 
-			{{ Form::label('clinician_phone', 'Mobile Number:', array('class' =>'col-sm-2 ')) }}
-						{{ Form::text('clinician_phone', Auth::user()->phone_contact, array('class' => 'form-control col-sm-4', 'readonly')) }}
-			<!-- {{ Form::text('collection_date', Input::old('collection_date'), array('class' => 'form-control standard-datepicker col-sm-4', 'placeholder' => 'DD/ MM /YYYY')) }} -->
-		</div>
+						{{ Form::label('collection_date', 'Sample Collection Date:', array('class' =>'col-sm-2 ')) }}
+						{{ Form::text('collection_date', Input::old('collection_date'), array('class' => 'form-control standard-datepicker standard-datepicker-nofuture col-sm-4', 'placeholder' => 'YYYY-MM-DD')) }}
+					</div>
+					
+					<div class="form-group">
+						{{ Form::label('requesting_officer', 'Requesting Clinician:', array('class' =>'col-sm-2 ')) }}
+						{{ Form::text('requesting_officer', Auth::user()->name, array('class' => 'form-control col-sm-4' )) }}
+
+						{{ Form::label('clinician_phone', 'Mobile Number:', array('class' =>'col-sm-2 ')) }}
+						{{ Form::text('clinician_phone', Input::old('clinician_phone'), array('class' => 'form-control col-sm-4')) }}
+						<!-- {{ Form::text('collection_date', Input::old('collection_date'), array('class' => 'form-control standard-datepicker col-sm-4', 'placeholder' => 'DD/ MM /YYYY')) }} -->
+					</div>
 		<br>
 			<div class="form-group actions-row" style="text-align:right;">
 				{{ Form::button('<span class="glyphicon glyphicon-save"></span> '.'SAVE',

@@ -7,23 +7,7 @@
 	</ol>
 </div>
 
-<div class='container-fluid'>
-	<div class='row'>
-		<div class='col-md-12'>
-			{{ Form::open(array('route' => array('poc.index'), 'class'=>'form-inline','role'=>'form', 'method'=>'GET')) }}
-			<div class="form-group">
 
-				{{ Form::label('search', "search", array('class' => 'sr-only')) }}
-				{{ Form::text('search', Input::get('search'), array('class' => 'form-control test-search')) }}
-			</div>
-			<div class="form-group">
-				{{ Form::button("<span class='glyphicon glyphicon-search'></span> ".trans('messages.search'),
-				array('class' => 'btn btn-primary', 'type' => 'submit')) }}
-			</div>
-			{{ Form::close() }}
-		</div>
-	</div>
-</div>
 
 <br>
 
@@ -51,11 +35,11 @@
 					<th>Infant Name</th>
 					<th>Gender</th>
 					<th>Age In Months</th>
+					<th>Caretaker Mobile No.</th>
 					<th>PCR Status</th>
-					<th>Mother's PMTCT ARV</th>
-					<th>Entry Point</th>
 					<th>EID Test Result</th>
 					<th>Test Date</th>
+
 					<th>{{trans('messages.actions')}}</th>
 				</tr>
 			</thead>
@@ -73,23 +57,28 @@
 					<td>{{ $patient->infant_name }}</td>
 					<td>{{ $patient->gender }}</td>
 					<td class="text-center">{{ $patient->age}}</td>
-					<td>{{ $patient->pcr_level}}</td>
-					<td><i>Antenatal:: </i>{{$patient->pmtct_antenatal}}<br> <i>Delivery:: </i>{{$patient->pmtct_delivery}} <br> <i>Postnatal:: </i>{{$patient->pmtct_postnatal}}</td>
-					@if ($patient->entry_point == '')
+					@if ($patient->caretaker_number == '')
 					<td>-</td>
 					@else
-					<td>{{ $patient->entry_point}}</td>
+					<td>{{ $patient->caretaker_number}}</td>
 					@endif
+
+					<td>{{ $patient->pcr_level}}</td>
 					<td>{{ $patient->results}}</td>
 					<td>{{ $patient->test_date}}</td>
-				
 
 					<td>
 
 						@if(Auth::user()->can('request_test') and empty($patient->results))
-						<a class="btn btn-sm btn-warning" href="{{ URL::route('poc.enter_results', array($patient->id)) }}"
+						<a class="btn btn-sm btn-warning" href="{{ URL::route('poc.enter_results', array($patient->id)) }}">
 							<span class="glyphicon glyphicon-edit"></span>
 							Enter Results
+						</a>
+						@endif
+                        @if(Auth::user()->can('edit_test_results') and !empty($patient->results))
+						<a class="btn btn-sm btn-danger" href="{{ URL::route('poc.editresult', array($patient->resultid)) }}">
+							<span class="glyphicon glyphicon-edit"></span>
+							Edit Results
 						</a>
 						@endif
 
@@ -98,11 +87,6 @@
 						<a class="btn btn-sm btn-success" href="{{ URL::route('poc.show', array($patient->id)) }}" >
 							<span class="glyphicon glyphicon-eye-open"></span>
 							{{trans('messages.view')}}
-						</a>
-
-						<a class="btn btn-sm btn-info" href="{{ URL::route('poc.edit_results', array($patient->id)) }}"
-							<span class="glyphicon glyphicon-edit"></span>
-							Edit Results
 						</a>
 
 

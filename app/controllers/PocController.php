@@ -20,9 +20,10 @@ class PocController extends \BaseController {
 		//$patients = POC::all();
 
 		$patients = POC::leftjoin('poc_results as pr', 'pr.patient_id', '=', 'poc_tables.id')
-						->select('poc_tables.*','pr.results', 'pr.test_date')
+						->select('poc_tables.*','pr.results', 'pr.test_date','pr.id as resultid')
 						->from('poc_tables')
 						->get();
+						
 		// ->paginate(Config::get('kblis.page-items'))->appends(Input::except('_token'));
 
 		if (count($patients) == 0) {
@@ -45,7 +46,7 @@ class PocController extends \BaseController {
 	{
 		//Create patients
 		$hiv_status = array('0' => 'Positive', '1' => 'Negative', '2' => 'Unknown');
-		$antenatal= array('0'=>'Lifelong ART', '1' => 'No ART', '2' => 'UNKNOWN');
+		$antenatal= array('0'=>'Ante-natal', '1' => 'Delivery', '2' => 'Post-natal');
 
 		return View::make('poc.create')
 		->with('hiv_status', $hiv_status)
@@ -63,7 +64,6 @@ class PocController extends \BaseController {
 		$rules = array(
 
 			'infant_name' => 'required',
-			'age'       => 'required',
 			'gender' => 'required',
 			'mother_name' => 'required' ,
 			'entry_point' => 'required' ,
@@ -83,6 +83,8 @@ $patient->district_id = \Config::get('constants.DISTRICT_ID');
 $patient->facility_id = \Config::get('constants.FACILITY_ID');
 $patient->gender	= Input::get('gender');
 $patient->age	= Input::get('age');
+$patient->dob	= Input::get('dob');
+$patient->opdid	= Input::get('opdid');
 // $patient->exp_no = Input::get('exp_no');
 $patient->exp_no = Input::get('exp_no');
 $patient->caretaker_number	= Input::get('caretaker_number');
@@ -95,12 +97,15 @@ $patient->provisional_diagnosis	= Input::get('provisional_diagnosis');
 $patient->infant_pmtctarv	= Input::get('infant_pmtctarv');
 $patient->mother_hiv_status	= Input::get('mother_hiv_status');
 $patient->collection_date	= Input::get('collection_date');
+$patient->received_by	= Input::get('received_by');
 $patient->pcr_level	= Input::get('pcr_level');
 $patient->pmtct_antenatal	= Input::get('pmtct_antenatal');
 $patient->pmtct_delivery	= Input::get('pmtct_delivery');
 $patient->pmtct_postnatal	= Input::get('pmtct_postnatal');
+$patient->pmtctarv	= Input::get('pmtctarv');
+$patient->mother_pmtctarv	= Input::get('mother_pmtctarv');
+$patient->clinician_phone	= Input::get('clinician_phone');
 $patient->sample_id	= Input::get('sample_id');
-$patient->other_entry_point	= Input::get('other_entry_point');
 $patient->created_by = Auth::user()->name;
 
 
@@ -175,7 +180,11 @@ $patient->created_by = Auth::user()->name;
 		$patient = POC::find($id);
 
 		//Open the Edit View and pass to it the $patient
+		$hiv_status = array('0' => 'Positive', '1' => 'Negative', '2' => 'Unknown');
+		$antenatal= array('0'=>'Ante-natal', '1' => 'Delivery', '2' => 'Post-natal');
 		return View::make('poc.edit')
+		->with('hiv_status', $hiv_status)
+			->with('antenatal', $antenatal)
 		->with('patient', $patient);
 	}
 
@@ -225,6 +234,10 @@ $patient->created_by = Auth::user()->name;
 			$patient->pmtct_delivery	= Input::get('pmtct_delivery');
 			$patient->pmtct_postnatal	= Input::get('pmtct_postnatal');
 			$patient->sample_id	= Input::get('sample_id');
+			$patient->dob	= Input::get('dob');
+			$patient->opdid	= Input::get('opdid');
+			$patient->received_by	= Input::get('received_by');
+			$patient->clinician_phone	= Input::get('clinician_phone');
 			$patient->save();
 
 			// redirect
@@ -297,6 +310,10 @@ $patient->created_by = Auth::user()->name;
 			$result->results = Input::get('results');
 			$result->test_date = Input::get('test_date');
 			$result->error_code = Input::get('error_code');
+			$result->reviewed_by = Input::get('reviewed_by');
+			$result->review_date = Input::get('review_date');
+			$result->testing_device = Input::get('testing_device');
+			
 			try{
 				$result->save();
 				return Redirect::route('poc.index')
@@ -308,15 +325,15 @@ $patient->created_by = Auth::user()->name;
 			}
 		}
 	}
-
-	public function edit_results($patient_id){
-		$patient = POC::find($patient_id);
-		$result = POCResult::where('patient_id', $patient_id)->limit(1)->first();
+	//edit results
+	public function editresult($result_id){
+		$result = POCResult::find($result_id);
+		$patient = POC::find($result->patient_id);
 		return View::make('poc.edit_results')
-		->with('patient', $patient)->with('result', $result);
+		->with('result', $result)
+		->with('patient', $patient);
 	}
-
-	public function update_results($patient_id)
+	public function updateresult($result_id)
 	{
 		$rules = array(
 			'results' => 'required',
@@ -328,14 +345,18 @@ $patient->created_by = Auth::user()->name;
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 			// store
-			$result = POCResult::find(Input::get('result_id'));
+			$result = POCResult::find($result_id);
 			$result->results = Input::get('results');
 			$result->test_date = Input::get('test_date');
 			$result->error_code = Input::get('error_code');
+			$result->reviewed_by = Input::get('reviewed_by');
+			$result->review_date = Input::get('review_date');
+			$result->testing_device = Input::get('testing_device');
+			
 			try{
 				$result->save();
 				return Redirect::route('poc.index')
-				->with('message', 'Successfully updated esults information:!');
+				->with('message', 'Successfully updated results information:!');
 
 			}catch(QueryException $e){
 				Log::error($e);
@@ -344,7 +365,7 @@ $patient->created_by = Auth::user()->name;
 		}
 	}
 
-	public function download(){
+public function download(){
 		$test_date_fro = Input::get('test_date_fro');
 		$test_date_to = Input::get('test_date_to');
 		if(!empty($test_date_fro) and !empty($test_date_to)){
@@ -353,7 +374,7 @@ $patient->created_by = Auth::user()->name;
 			return View::make('poc.download');
 		}
 	}
-
+	
 	private function csv_download($fro, $to){
 		$patients = POC::leftjoin('poc_results as pr', 'pr.patient_id', '=', 'poc_tables.id')
 						->select('poc_tables.*','pr.results', 'pr.test_date')
@@ -368,14 +389,14 @@ $patient->created_by = Auth::user()->name;
 				'Infant Name',
 				'Gender',
 				'Age',
-
+			
 				'EXP No',
 				'Caretaker Number',
 				'Admission Date',
 				'Breastfeeding?',
 				'Entry Point',
 				'Mother Name',
-
+				
 				'Provisional Diagnosis',
 				'Infant PMTCT ARV',
 				'Mother HIV Status',
@@ -388,19 +409,18 @@ $patient->created_by = Auth::user()->name;
 				'Results',
 				'Test Date'
 				);
-
 		fputcsv($output, $headers);
 		foreach ($patients as $patient) {
 			$row=array(
 				$patient->infant_name,
 				$patient->gender,
-				$patient->age,
+				$patient->age,			
 				$patient->exp_no,
 				$patient->caretaker_number,
 				$patient->admission_date,
 				$patient->breastfeeding_status,
 				$patient->entry_point,
-				$patient->mother_name,
+				$patient->mother_name,				
 				$patient->provisional_diagnosis,
 				$patient->infant_pmtctarv,
 				$patient->mother_hiv_status,
@@ -413,12 +433,11 @@ $patient->created_by = Auth::user()->name;
 				$patient->results,
 				$patient->test_date
 				);
-			fputcsv($output, $row);
+			fputcsv($output, $row);	
 		}
 		fclose($output);
-
 	}
-
+	
 	/**
 	 *Return a unique Lab Number
 	 *
