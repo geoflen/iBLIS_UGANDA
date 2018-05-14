@@ -215,6 +215,12 @@
 					<div class="form-group">
 						{{ Form::label('sample_id', 'Sample ID:',array('class' =>'col-sm-2 required ')) }}
 						{{ Form::text('sample_id', Input::old('sample_id'), array('class' => 'form-control col-sm-4')) }}
+					</div>
+					
+					<div class="form-group">
+
+						{{ Form::label('received_by', 'Received_by:',array('class' =>'col-sm-2 required ')) }}
+						{{ Form::text('received_by', Input::old('received_by'), array('class' => 'form-control col-sm-4')) }}
 
 						{{ Form::label('collection_date', 'Sample Collection Date:', array('class' =>'col-sm-2 ')) }}
 						{{ Form::text('collection_date', Input::old('collection_date'), array('class' => 'form-control standard-datepicker standard-datepicker-nofuture col-sm-4', 'placeholder' => 'YYYY-MM-DD')) }}
