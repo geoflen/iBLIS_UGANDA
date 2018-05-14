@@ -15,6 +15,11 @@ class PocController extends \BaseController {
 	 */
 	public function index()
 		{
+
+		$facility = Hubs::orderBy('name','ASC')
+		->lists('name','id');
+		$district = District::orderBy('name','ASC')
+		->lists('name', 'id');
 		$search = Input::get('search');
 
 		//$patients = POC::all();
@@ -91,7 +96,7 @@ $patient->district_id = \Config::get('constants.DISTRICT_ID');
 $patient->facility_id = \Config::get('constants.FACILITY_ID');
 $patient->gender	= Input::get('gender');
 $patient->age	= Input::get('age');
-// $patient->exp_no = Input::get('exp_no');
+$patient->received_by = Input::get('received_by');
 $patient->exp_no = Input::get('exp_no');
 $patient->caretaker_number	= Input::get('caretaker_number');
 $patient->admission_date	= Input::get('admission_date');
