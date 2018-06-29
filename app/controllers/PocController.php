@@ -13,6 +13,11 @@ class PocController extends \BaseController {
 	 *
 	 * @return Response
 	 */
+
+	 public function poc()
+	 {
+	 	return View::make('poc.pochome');
+	 }
 	public function index()
 		{
 
@@ -22,13 +27,10 @@ class PocController extends \BaseController {
 		->lists('name', 'id');
 		$search = Input::get('search');
 
-		//$patients = POC::all();
-
 		$patients = POC::leftjoin('poc_results as pr', 'pr.patient_id', '=', 'poc_tables.id')
 						->select('poc_tables.*','pr.results', 'pr.test_date')
 						->from('poc_tables')
 						->get();
-		// ->paginate(Config::get('kblis.page-items'))->appends(Input::except('_token'));
 
 		if (count($patients) == 0) {
 		 	Session::flash('message', trans('messages.no-match'));
@@ -42,7 +44,6 @@ class PocController extends \BaseController {
 		->with('district',$district)
 		->with('patients', $patients)->withInput(Input::all());
 	}
-
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -88,9 +89,6 @@ class PocController extends \BaseController {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 			// store
-
-
-
 $patient = new POC;
 $patient->district_id = \Config::get('constants.DISTRICT_ID');
 $patient->facility_id = \Config::get('constants.FACILITY_ID');
@@ -139,28 +137,14 @@ $patient->created_by = Auth::user()->name;
 	 * @param  int  $id
 	 * @return Response
 	 */
-	// public function show($id)
-	// {
-	// 	//Show a patient
-	// 	$patient = POC::find($id);
-	//
-	// 	//Show the view and pass the $patient to it
-	// 	return View::make('poc.show')->with('patient', $patient);
-	// }
-
-
 
 	public function show($id)
 		{
 		$search = Input::get('search');
 
-		//$patients = POC::all();
-
 		$patient = POC::leftjoin('poc_results as pr', 'pr.patient_id', '=', 'poc_tables.id')
 						->select('poc_tables.*','pr.results', 'pr.test_date')
 						->from('poc_tables')->find($id);
-		// ->paginate(Config::get('kblis.page-items'))->appends(Input::except('_token'));
-
 		if (count($patient) == 0) {
 		 	Session::flash('message', trans('messages.no-match'));
 		}
@@ -171,18 +155,12 @@ $patient->created_by = Auth::user()->name;
 		->with('antenatal',$antenatal)
 		->with('patient', $patient)->withInput(Input::all());
 	}
-
-
-
-
-
 	/**
 	 * Show the form for editing the specified resource.
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-
 
 	public function edit($id)
 	{

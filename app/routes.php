@@ -136,6 +136,66 @@ Route::group(array("before" => "auth"), function()
 
     //Unhls patiend routes end
 
+
+    //TB-Genexpert routes start here
+
+    Route::resource('tb', 'TBController');
+    Route::any('/pochome', array(
+      "as"   => "poc.pochome",
+      "uses" => 'PocController@poc'
+    ));
+    Route::get("/tb/{id}/delete", array(
+        "as"   => "tb.delete",
+        "uses" => "TBController@delete"
+    ));
+    Route::post("/tb/search", array(
+        "as"   => "tb.search",
+        "uses" => "TBController@search"
+    ));
+
+    Route::get("/tb/{id}/edit", array(
+        "as"   => "tb.edit",
+        "uses" => "TBController@edit"
+    ));
+
+    Route::put("/tb/{id}/update", array(
+        "as"   => "tb.update",
+        "uses" => "TBController@update"
+    ));
+
+    Route::get("/tb/enter_results/{patient_id}/", array(
+        "as"   => "tb.enter_results",
+        "uses" => "TBController@enter_results"
+    ));
+
+    Route::post("/tb/save_results/{patient_id}/", array(
+        "as"   => "tb.save_results",
+        "uses" => "TBController@save_results"
+    ));
+
+     Route::get("/tb/edit_results/{patient_id}/", array(
+        "as"   => "tb.edit_results",
+        "uses" => "TBController@edit_results"
+    ));
+
+    Route::post("/tb/update_results/{patient_id}/", array(
+        "as"   => "tb.update_results",
+        "uses" => "TBController@update_results"
+    ));
+
+    Route::get("/tb_download/", array(
+        "as"   => "tb.download",
+        "uses" => "TBController@download"
+    ));
+
+    Route::get("unhls_test/importPoc", array(
+        "as" => "unhls_test.importPoc",
+        "uses" => "UnhlsTestController@importPoc"));
+
+    Route::post("unhls_test/uploadPoCResults", array(
+        "as" => "unhls_test.uploadPoCResults",
+        "uses" => "UnhlsTestController@uploadPoCResults"));
+
     Route::get("/eid_patient", array(
         "as" => "eid_patient.create",
         "uses" => "UnhlsPatientController@createEid"));

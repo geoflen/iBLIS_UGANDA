@@ -86,7 +86,7 @@
 					@endif
 					<td>{{ $patient->results}}</td>
 					<td>{{ $patient->test_date}}</td>
-				
+
 
 					<td>
 

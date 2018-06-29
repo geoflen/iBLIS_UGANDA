@@ -135,6 +135,12 @@
 											<span class="glyphicon glyphicon-tag"></span> {{"Register EID patient"}}</a>
 									</div>
 								</li>
+																<li>
+									<div>
+										<a href="{{ URL::route('tb.create') }}">
+											<span class="glyphicon glyphicon-tag"></span> {{"Register TB-Genexpert patient"}}</a>
+									</div>
+								</li>
 								<li>
 									<div>
 										<a href="{{ URL::route('unhls_patient.index') }}">
@@ -219,6 +225,14 @@
 									<div>
 										<a href="{{URL::route('poc.download')}}">
 											<span class="glyphicon glyphicon-tag" ></span>{{trans('Download POC Data')}}
+										</a>
+									</div>
+								</li>
+
+								<li>
+									<div>
+										<a href="{{URL::route('tb.download')}}">
+											<span class="glyphicon glyphicon-tag" ></span>{{trans('Download TB-GeneXpert Data')}}
 										</a>
 									</div>
 								</li>
