@@ -11,7 +11,7 @@
 <div class="container col-md-9">
 	<a class="link-tip" href="{{URL::route('tb.index')}}" data-toggle="tooltip" data-placement="right" title="CLICK TO ACCESS TB-Genexpert">
 		<div class="panel panel-default">
-			<span class="ion-ios-cart" style="font-size:80px"></span> <br><span class="nav_title">TB-Genexpert</span>
+			<img src = "{{ asset('/i/genexpert.png') }}" alt="genexpert.png" height="60" width="60"><br><span class="nav_title">TB-Genexpert</span>
 		</div>
 	</a>
 </div>
