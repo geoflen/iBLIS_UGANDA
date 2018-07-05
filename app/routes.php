@@ -138,6 +138,18 @@ Route::group(array("before" => "auth"), function()
             "uses" => "InstrumentController@importDriver"
         ));
     });
+    
+    Route::get("/unhls_test/gxpert", array(
+        "as"   => "unhls_test.gxpert",
+        "uses" => "UnhlsTestController@getXpertResults"
+    ));    
+
+    Route::post("/unhls_test/downloadXpertResults", array(
+        "as"   => "unhls_test.downloadXpertResults",
+        "uses" => "UnhlsTestController@downloadXpertResults"
+    ));    
+    
+
     Route::any("/unhls_test", array(
         "as"   => "unhls_test.index",
         "uses" => "UnhlsTestController@index"

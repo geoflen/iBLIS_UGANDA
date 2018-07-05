@@ -770,5 +770,5 @@ return array(
     'equipment-maintenance'=> 'Equipment maintenance',         
     'supplier-list'=> 'Supplier List',    
     'add'=> 'Add',
-
+    'download'=> 'Download',
 );

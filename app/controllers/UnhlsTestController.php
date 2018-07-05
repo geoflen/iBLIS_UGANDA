@@ -2,6 +2,7 @@
 
 use Illuminate\Database\QueryException;
 
+
 /**
  * Contains test resources  
  * 
@@ -370,6 +371,101 @@ class UnhlsTestController extends \BaseController {
 
 	}
 
+
+	/**
+	 * Download Gene Xpert results export view
+	 *@param
+	 * @return Response
+	 */
+	public function downloadXpertResults()
+	{
+
+        $file = App::make('excel');
+
+		return $file->create('Results', function($excel) {
+
+
+		$rows = DB::table('unhls_tests')
+				            ->join('unhls_visits', 'unhls_tests.visit_id', '=', 'unhls_visits.id')
+				            ->join('unhls_test_results', 'unhls_tests.id', '=', 'unhls_test_results.test_id')
+				            ->join('unhls_patients', 'unhls_visits.patient_id', '=', 'unhls_patients.id')
+		                     ->select(DB::raw('name, dob,gender,result,specimen_id,time_entered,time_started,time_completed,time_verified,time_sent,test_type_id'))
+							->where('unhls_test_results.time_entered','<=',Input::get('date_to'))
+							->where('unhls_test_results.time_entered','>=',Input::get('date_from'))		
+							->where('unhls_tests.test_type_id','=',\Config::get('constants.GXPERT_TEST_ID'))		      
+		                    ->orderBy('time_entered','asc')
+		                    ->get();
+
+		        // Initialize the array which will be passed into the Excel
+		        // generator.
+		        $par_array = []; 
+
+
+		        // Define the Excel spreadsheet headers
+		        $par_array[] = ['Name','DOB','Gender','Result','SpecimenId','TimeEntered','TimeStarted','TimeCompleted','TimeVerified','TimeSent','TestTypeId','FacilityId'];
+
+		        foreach ($rows as $row) {
+
+
+		                $par_array[] = [$row->name,$row->dob,number_format($row->gender),$row->result,$row->specimen_id,$row->time_entered,$row->time_started,$row->time_completed,$row->time_verified,$row->time_sent,$row->test_type_id,\Config::get('constants.DHIS_ID') ];
+		                
+		}      
+
+
+
+            // Set the spreadsheet title, creator, and description
+            $excel->setTitle('Results extract');
+            $excel->setCreator('ALIS LIMS database')->setCompany('UNHLS/CPHL');
+            $excel->setDescription('Results extract');
+
+            // Build the spreadsheet, passing in the payments array
+            $excel->sheet('sheet1', function($sheet) use ($par_array) {
+                
+                $sheet->fromArray($par_array, null, 'A1', false, false);
+
+                // Set font with ->setStyle()
+                $sheet->setStyle(array(
+                    'font' => array(
+                        'name'      =>  'Segoe UI',
+                        'size'      =>  10,
+                        'bold'      =>  false
+                    )
+                ));
+
+
+                // Set font with ->setStyle()`for cells
+                $sheet->cells('A1:L1', function($cells) {
+                    
+                    // Set font
+                    $cells->setFont(array(
+                        'family'     => 'Segoe UI',
+                        'size'       => 10,
+                        'bold'       =>  true
+                    ));
+                });
+
+
+            });
+
+		})->export('xls');
+
+		//return View::make('unhls_test.getXpertResults');
+
+	}
+
+
+
+	/**
+	 * Gene Xpert results export view
+	 *@param
+	 * @return Response
+	 */
+	public function getXpertResults()
+	{
+
+		return View::make('unhls_test.getXpertResults');
+
+	}
 
 
 	/**

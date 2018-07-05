@@ -194,14 +194,20 @@
 										</a>
 									</div>
 								</li>
-																<li>
+								<li>
 									<div>
 										<a href="{{URL::route('unhls_test.verified')}}">
 											<span class="glyphicon glyphicon-tag" ></span>{{trans('Verified Tests')}}
 										</a>
 									</div>
 								</li>
-
+								<li>
+									<div>
+										<a href="{{URL::route('unhls_test.gxpert')}}">
+											<span class="glyphicon glyphicon-tag" ></span>{{trans('Gene Xpert Results')}}
+										</a>
+									</div>
+								</li>
 							</ul>
 
 						<div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px; width: 215px; display: none;"><div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px; height: 620px; display: none;"><div class="ps-scrollbar-y" style="top: 0px; height: 0px;"></div></div></div>
@@ -415,6 +421,10 @@
 							<li>
 							<a href="http://vldash.cphluganda.org/" target="_blank">
 								<span class=""></span> Viral Load Dashboard</a>
+							</li>
+							<li>
+							<a href="http://gxpert.cphluganda.org/" target="_blank">
+								<span class=""></span> Gene Xpert Results</a>
 							</li>
 							<li>
 							<a href="http://cphl.go.ug/" target="_blank">

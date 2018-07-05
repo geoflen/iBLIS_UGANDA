@@ -18,4 +18,6 @@ return [
     'FROM_WAREHOUSE' => '2',    
     'TO_FACILITY' => '3',    
     'TO_PERSON' => '4',
+    'DHIS_ID' => 'SZS6IdnTKZR', 
+    'GXPERT_TEST_ID' => '41',
     ];
