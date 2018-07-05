@@ -389,7 +389,7 @@ class UnhlsTestController extends \BaseController {
 				            ->join('unhls_visits', 'unhls_tests.visit_id', '=', 'unhls_visits.id')
 				            ->join('unhls_test_results', 'unhls_tests.id', '=', 'unhls_test_results.test_id')
 				            ->join('unhls_patients', 'unhls_visits.patient_id', '=', 'unhls_patients.id')
-		                     ->select(DB::raw('name, dob,gender,result,specimen_id,time_entered,time_started,time_completed,time_verified,time_sent,test_type_id'))
+		                     ->select(DB::raw('ulin, dob,gender,result,specimen_id,time_entered,time_started,time_completed,time_verified,time_sent,test_type_id,unhls_test_results.id as result_id'))
 							->where('unhls_test_results.time_entered','<=',Input::get('date_to'))
 							->where('unhls_test_results.time_entered','>=',Input::get('date_from'))		
 							->where('unhls_tests.test_type_id','=',\Config::get('constants.GXPERT_TEST_ID'))		      
@@ -402,12 +402,11 @@ class UnhlsTestController extends \BaseController {
 
 
 		        // Define the Excel spreadsheet headers
-		        $par_array[] = ['Name','DOB','Gender','Result','SpecimenId','TimeEntered','TimeStarted','TimeCompleted','TimeVerified','TimeSent','TestTypeId','FacilityId'];
+		        $par_array[] = ['Number','DOB','Gender','Result','SpecimenId','TimeEntered','TimeStarted','TimeCompleted','TimeVerified','TimeSent','TestTypeId','FacilityId','ResultId'];
 
 		        foreach ($rows as $row) {
 
-
-		                $par_array[] = [$row->name,$row->dob,number_format($row->gender),$row->result,$row->specimen_id,$row->time_entered,$row->time_started,$row->time_completed,$row->time_verified,$row->time_sent,$row->test_type_id,\Config::get('constants.DHIS_ID') ];
+		                $par_array[] = [ $row->ulin,$row->dob,number_format($row->gender),$row->result,$row->specimen_id,$row->time_entered,$row->time_started,$row->time_completed,$row->time_verified,$row->time_sent,$row->test_type_id,\Config::get('constants.DHIS_ID'),$row->result_id ];
 		                
 		}      
 
@@ -434,7 +433,7 @@ class UnhlsTestController extends \BaseController {
 
 
                 // Set font with ->setStyle()`for cells
-                $sheet->cells('A1:L1', function($cells) {
+                $sheet->cells('A1:M1', function($cells) {
                     
                     // Set font
                     $cells->setFont(array(
