@@ -85,6 +85,67 @@ Route::group(array("before" => "auth"), function()
         "as"   => "unhls_patient.search",
         "uses" => "UnhlsPatientController@search"
     ));
+
+      //POC routes start here
+    Route::resource('poc', 'PocController');
+    Route::get("/poc/{id}/delete", array(
+        "as"   => "poc.delete",
+        "uses" => "PocController@delete"
+    ));
+    Route::post("/poc/search", array(
+        "as"   => "poc.search",
+        "uses" => "PocController@search"
+    ));
+
+    Route::get("/poc/{id}/edit", array(
+        "as"   => "poc.edit",
+        "uses" => "PocController@edit"
+    ));
+
+    Route::put("/poc/{id}/update", array(
+        "as"   => "poc.update",
+        "uses" => "PocController@update"
+    ));
+
+    Route::get("/poc/enter_results/{patient_id}/", array(
+        "as"   => "poc.enter_results",
+        "uses" => "PocController@enter_results"
+    ));
+
+    Route::get("/poc/edit_results/{patient_id}/", array(
+        "as"   => "poc.edit_results",
+        "uses" => "PocController@edit_results"
+    ));
+
+    Route::post("/poc/save_results/{patient_id}/", array(
+        "as"   => "poc.save_results",
+        "uses" => "PocController@save_results"
+    ));
+
+    Route::get("/poc_download/", array(
+        "as"   => "poc.download",
+        "uses" => "PocController@download"
+    ));
+
+    Route::post("/poc/update_results/{patient_id}", array(
+        "as"   => "poc.update_results",
+        "uses" => "PocController@update_results"
+    ));
+
+    Route::get("unhls_test/importPoc", array(
+        "as" => "unhls_test.importPoc",
+        "uses" => "UnhlsTestController@importPoc"));
+
+    Route::post("unhls_test/uploadPoCResults", array(
+        "as" => "unhls_test.uploadPoCResults",
+        "uses" => "UnhlsTestController@uploadPoCResults"));
+
+    //Unhls patiend routes end
+
+    Route::get("/eid_patient", array(
+        "as" => "eid_patient.create",
+        "uses" => "UnhlsPatientController@createEid"));
+    
     //Unhls patiend routes end
     Route::any("/instrument/getresult", array(
         "as"   => "instrument.getResult",
@@ -159,8 +220,45 @@ Route::group(array("before" => "auth"), function()
             "as"   => "measurenamemapping.update",
             "uses" => "MeasureNameMappingController@update"
         ));
+        Route::get("/measureranges/{id}/ranges", array(
+            "as"   => "measureranges.getranges",
+            "uses" => "MeasureNameMappingController@getRanges"
+        ));
+        Route::get("/measureranges/{id}/range", array(
+            "as"   => "measureranges.getrange",
+            "uses" => "MeasureNameMappingController@getRange"
+        ));
+        Route::put("/measureranges/{id}/range", array(
+            "as"   => "measureranges.postrange",
+            "uses" => "MeasureNameMappingController@postRange"
+        ));
 
-        // Route::resource('measurenamemapping', 'MeasureNameMappingController');
+        Route::get("/measureranges/{id}/negativegramstain", array(
+            "as"   => "measureranges.getnegativegramstain",
+            "uses" => "MeasureNameMappingController@getNegativeGramStain"
+        ));
+        Route::post("/measureranges/{id}/negativegramstain", array(
+            "as"   => "measureranges.postnegativegramstain",
+            "uses" => "MeasureNameMappingController@postNegativeGramStain"
+        ));
+        Route::get("/measureranges/{id}/{test_name_mapping_id}/negativegramstaindelete", array(
+            "as"   => "measureranges.deletenegativegramstain",
+            "uses" => "MeasureNameMappingController@deleteNegativeGramStain"
+        ));
+
+        Route::get("/measureranges/{id}/negativeorganism", array(
+            "as"   => "measureranges.getnegativeorganism",
+            "uses" => "MeasureNameMappingController@getNegativeOrganism"
+        ));
+        Route::post("/measureranges/{id}/negativeorganism", array(
+            "as"   => "measureranges.postnegativeorganism",
+            "uses" => "MeasureNameMappingController@postNegativeOrganism"
+        ));
+        Route::get("/measureranges/{id}/{test_name_mapping_id}/negativeorganismdelete", array(
+            "as"   => "measureranges.deletenegativeorganism",
+            "uses" => "MeasureNameMappingController@deleteNegativeOrganism"
+        ));
+
         Route::get("/instrument/{id}/delete", array(
             "as"   => "instrument.delete",
             "uses" => "InstrumentController@delete"

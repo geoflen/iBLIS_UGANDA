@@ -37,7 +37,7 @@ return array(
 	|
 	*/
 
-	'organization' => 'JINJA REGIONAL REFERRAL HOSPITAL LABORATORY',
+	'organization' => 'ADJUMANI GENERAL HOSPITAL',
 	
 
 
@@ -47,7 +47,7 @@ return array(
 	|--------------------------------------------------------------------------
 	|
 	*/
-	'address' => 'P.O. BOX 43, JINJA, UGANDA.<br> Phone: +256 756802020<br>',
+	'address' => 'P.O. BOX 20, ADJUMANI, UGANDA.<br> Phone: +256-772875400</br>',
 	
 	/*
 	|--------------------------------------------------------------------------

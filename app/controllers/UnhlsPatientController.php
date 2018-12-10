@@ -40,7 +40,8 @@ class UnhlsPatientController extends \BaseController {
 	public function create()
 	{
 		//Create Patient
-		return View::make('unhls_patient.create');
+		$ulinFormat = AdhocConfig::where('name','ULIN')->first()->getULINFormat();
+		return View::make('unhls_patient.create')->with('ulinFormat', $ulinFormat);
 	}
 
 		/**
@@ -79,8 +80,11 @@ class UnhlsPatientController extends \BaseController {
 
 			try{
 				$patient->save();
-				
-				$patient->ulin = $patient->getUlin();
+				if (Input::get('ulin')!= '') {
+					$patient->ulin = Input::get('ulin');
+				}else{
+					$patient->ulin = $patient->getUlin();
+				}
 				$patient->save();
 				$uuid = new UuidGenerator; 
 				$uuid->save();

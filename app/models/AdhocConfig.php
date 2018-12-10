@@ -22,6 +22,8 @@ class AdhocConfig extends Eloquent
 		'ULIN' => [
 			'Standard' => 1,
 			'Jinja_SOP' => 2,
+			'Mityana_SOP' => 3,
+			'Manual' => 4,
 		],
 		// if clinician will use the system
 		'Clinician_UI' => [
@@ -53,6 +55,14 @@ class AdhocConfig extends Eloquent
 		switch ($this->option) {
 			case AdhocConfig::$constants['ULIN']['Jinja_SOP']:
 				$format = 'Jinja_SOP';
+				break;
+
+			case AdhocConfig::$constants['ULIN']['Mityana_SOP']:
+				$format = 'Mityana_SOP';
+				break;
+
+			case AdhocConfig::$constants['ULIN']['Manual']:
+				$format = 'Manual';
 				break;
 
 			default:

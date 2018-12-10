@@ -172,10 +172,12 @@
 										<div class="stat_box">
 											<div class="stat_ico color_f"><i class="ion-ios-people"></i></div>
 											<div class="stat_content">
-												<span class="stat_count">7</span>
-												<span class="stat_name">Number of Lab Staff</span>
+												{{--*/ $staff = count(User::all())  - 1 /*--}}
+												<span class="stat_count">{{(User::count())}}</span>
+												<span class="stat_name">Number of Lab Staffs</span>
 											</div>
 										</div>
+
 										<div class="stat_box">
 											<div class="stat_ico color_f"><i class="ion-ios-person"></i></div>
 											<div class="stat_content">

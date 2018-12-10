@@ -105,7 +105,7 @@
 											{{Form::email('email', Auth::user()->email, array('class' => 'form-control', 'placeholder' =>Auth::user()->email))}}
 										</div>
 									</div>
-									<div class="col-md-6">
+									<!-- <div class="col-md-6">
 										<div class="form-group">
 											{{ Form::label('hospitalized', 'Hospitalized for more than 48 hours') }}
 											<div>{{ Form::radio('hospitalized', '1', false) }}
@@ -122,7 +122,7 @@
 											<div>{{ Form::radio("on_antibiotics", '0', false) }}
 											<span class="input-tag">No</span></div>
 										</div>
-									</div>
+									</div> -->
 									<div class="form-pane panel panel-default">
 										<div class="col-md-6">
 											<div class="form-group">

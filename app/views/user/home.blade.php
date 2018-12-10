@@ -27,9 +27,9 @@
 		</a>
 	</div>
 	<div class="btn-group container col-xs-3">
-		<a class="link-tip" href="#" data-toggle="tooltip" data-placement="bottom" title="Click to access other resources e.g links to Viral load and EID Dashboard, CPHL websites">
+		<a class="link-tip" href="{{URL::route('poc.index')}}" data-toggle="tooltip" data-placement="bottom" title="Click to access other resources e.g links to Viral load and EID Dashboard, CPHL websites">
 			<div class="panel panel-default">
-			<span class="ion-icon ion-ios-folder"></span> <br><span class="nav_title">OTHER RESOURCES</span>
+			<span class="ion-icon ion-ios-folder"></span> <br><span class="nav_title">POC / EID</span>
 			</div>
 		</a>
 	</div>	

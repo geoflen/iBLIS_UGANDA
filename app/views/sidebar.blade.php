@@ -137,6 +137,12 @@
 								</li>
 								<li>
 									<div>
+										<a href="{{ URL::route('poc.create') }}">
+											<span class="glyphicon glyphicon-tag"></span> {{"Register EID patient"}}</a>
+									</div>
+								</li>
+								<li>
+									<div>
 										<a href="{{ URL::route('unhls_patient.index') }}">
 											<span class="glyphicon glyphicon-tag"></span> {{Lang::choice('messages.view-patients', 1)}}</a>
 									</div>
@@ -204,13 +210,29 @@
 										</a>
 									</div>
 								</li>
-																<li>
+								<li>
 									<div>
 										<a href="{{URL::route('unhls_test.verified')}}">
 											<span class="glyphicon glyphicon-tag" ></span>{{trans('Verified Tests')}}
 										</a>
 									</div>
 								</li>
+								<li>
+									<div>
+										<a href="{{URL::route('unhls_test.importPoc')}}">
+											<span class="glyphicon glyphicon-tag" ></span>{{trans('Import POC results')}}
+										</a>
+									</div>
+								</li>
+
+								<li>
+									<div>
+										<a href="{{URL::route('poc.download')}}">
+											<span class="glyphicon glyphicon-tag" ></span>{{trans('Download POC Data')}}
+										</a>
+									</div>
+								</li>
+
 
 							</ul>
 

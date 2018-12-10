@@ -44,10 +44,10 @@
 					<td>{{ $visit->patient->getAge()}}</td>
 				</tr>
 				<tr>
-					<th>{{ trans('messages.patient-lab-number')}}</th>
+					<!-- <th>{{ trans('messages.patient-lab-number')}}</th>
 					<td>{{ $visit->patient->external_patient_number }}</td>
 					<th>{{ trans('messages.requesting-facility-department')}}</th>
-					<td>{{ Config::get('kblis.organization') }}</td>
+					<td>{{ Config::get('kblis.organization') }}</td> -->
 				</tr>
 			</tbody>
 		</table>
