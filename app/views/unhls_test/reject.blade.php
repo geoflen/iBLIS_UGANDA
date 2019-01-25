@@ -32,29 +32,47 @@
 		{{ Form::open(array('route' => 'unhls_test.rejectAction')) }}
 			{{ Form::hidden('specimen_id', $test->specimen->id) }}
 			{{ Form::hidden('test_id', $test->id) }}
+			<div class="container-fluid">
 			<div class="panel-body">
-				<div class="display-details">
-				    <p><strong>{{ Lang::choice('messages.test-type',1) }}</strong>
-				        {{$test->testType->name}}</p>
-				    <p><strong>{{trans('messages.specimen-type-title')}}</strong>
-				        {{$test->specimen->specimenType->name}}</p>
-				    <p>
-				        <strong>{{trans('messages.specimen-number-title')}}</strong>
-				        {{$test->specimen->id}}
-				    </p>
-				</div>
-				<div id="reject-reason">
-					<div class="row">
-						<div class="form-group col-md-4">
-							{{ Form::label('rejectionReason', trans('messages.rejection-reason')) }}
-							{{ Form::select('rejectionReason[]', array(0 => '')+$rejectionReason->lists('reason', 'id'),
-								Input::old('rejectionReason'), array('class' => 'form-control')) }}
-						</div>
-						{{ Form::button("<span class='glyphicon glyphicon-delete'></span> ".'Remove', ['class' => 'remove-reason btn-normal']) }}
+				<div class="panel display-details row">
+					<div class="col-md-4">
+					    <p><strong>{{ Lang::choice('messages.test-type',1) }}</strong>
+					        {{$test->testType->name}}</p>
+				    </div>
+				    <div class="col-md-4">
+					    <p><strong>{{trans('messages.specimen-type-title')}}</strong>
+					        {{$test->specimen->specimenType->name}}</p>
+					    </div>
+				    <div class="col-md-4">
+				    	<p><strong>{{trans('messages.specimen-number-title')}}</strong>
+				        	{{$test->specimen->id}}
+				    	</p>
 					</div>
 				</div>
-				<div>
-				<a href="#" id="add"><i>Add Rejection Reason if more than one</i></a></div>
+			</div>
+			<div class="form-group">
+				{{Form::label('rejectReason', trans('messages.rejection-reason') )}}<strong><i>{{'Please select all that apply'}}</i></strong>
+
+			<div class="panel panel-default col-md-10">
+				<div class=" form-pane container-fluid">
+					<?php
+					$cnt = 0;
+					$zebra = "";
+					?>
+					@foreach($rejectionReason as $key=>$reason)
+					{{ ($cnt%5==0)?"<div class='row $zebra'>":"" }}
+						<?php
+						$cnt++;
+						$zebra = (((int)$cnt/5)%2==1?"row-striped":"");
+						?>
+						<div class="col col-md-2">
+							{{ Form::checkbox('rejectionReason[]', $reason->id) }} <span class="input-tag">{{$reason->reason}}</span>
+						</div>{{ ($cnt%5==0)?"</div>":"" }}
+					@endforeach
+					{{ ($cnt%5!=0)?"</div>":"" }}
+				</div>
+			</div>
+
 				<div class="form-group">
 					{{ Form::label('rejecting_officer', trans("messages.rejecting-officer")) }}
 					{{Form::text('rejecting-officer', Auth::user()->name, Input::old('rejecting_officer'),
@@ -81,5 +99,6 @@
 			</div>
 		{{ Form::close() }}
 		</div>
-	</div>
+</div>
 @stop
+

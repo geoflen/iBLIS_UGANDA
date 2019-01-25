@@ -109,7 +109,6 @@ return array(
 		'Zizaco\Entrust\EntrustServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Maatwebsite\Excel\ExcelServiceProvider',
-
 	),
 
 	/*

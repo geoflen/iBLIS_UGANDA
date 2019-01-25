@@ -67,16 +67,16 @@
 										{{trans('messages.user-statistics-report')}}</a>
 									</div>
 								</li>
+								<li>
+									<div><a href="{{ URL::route('reports.aggregate.hmis105')}}">
+										<span class="glyphicon glyphicon-tag"></span>
+										HMIS 105</a>
+									</div>
+								</li>
 <!-- 								<li>
 									<div><a href="{{ URL::route('reports.aggregate.moh706')}}">
 										<span class="glyphicon glyphicon-tag"></span>
 										{{trans('messages.moh-706')}}</a>
-									</div>
-								</li>
-								<li>
-									<div><a href="#">
-										<span class="glyphicon glyphicon-tag"></span>
-										HMIS 105</a>
 									</div>
 								</li>
  								<li>
@@ -105,7 +105,7 @@
 							<h4 class="panel_heading panel_heading_first">Dashboard</h4>
 							<ul>
 								<li>
-									<div><a href="{{ URL::route('user.dashboard')}}">
+									<div><a href="{{ URL::route('dashboard.index')}}">
 										<span class="glyphicon glyphicon-tag"></span>
 										Dashboard</a>
 									</div>
@@ -127,6 +127,12 @@
 									<div>
 										<a href="{{ URL::route('unhls_patient.create')}}">
 											<span class="glyphicon glyphicon-tag"></span> {{Lang::choice('messages.register-new-patient', 1)}}</a>
+									</div>
+								</li>
+																<li>
+									<div>
+										<a href="{{ URL::route('eid_patient.create') }}">
+											<span class="glyphicon glyphicon-tag"></span> {{"Register EID patient"}}</a>
 									</div>
 								</li>
 								<li>
@@ -208,6 +214,11 @@
 										</a>
 									</div>
 								</li>
+									<a href="{{URL::route('unhls_test.importPoc')}}">
+											<span class="glyphicon glyphicon-tag" ></span>{{trans('Import POC results')}}
+										</a>
+									</div>
+								</li>
 							</ul>
 
 						<div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px; width: 215px; display: none;"><div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px; height: 620px; display: none;"><div class="ps-scrollbar-y" style="top: 0px; height: 0px;"></div></div></div>
@@ -243,6 +254,10 @@
 								<li>
 									<a href="{{ URL::route("blisclient.index") }}">
 									<span class="glyphicon glyphicon-tag"></span>{{ trans('messages.interfaced-equipment')}}</a>
+								</li>
+								<li>
+									<a href="{{ URL::route("resetulin.create") }}">
+									<span class="glyphicon glyphicon-tag"></span>{{'Reset ULIN' }}</a>
 								</li>
 							</ul>
 						</div>

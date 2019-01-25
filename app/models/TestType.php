@@ -262,13 +262,14 @@ class TestType extends Eloquent
 		// TODO: Should be changed to a more flexible format i.e. that supports localization
 		$data =  UnhlsTest::select(DB::raw("test_types.id as id, test_types.name as test, ".
 					"COUNT(DISTINCT unhls_tests.specimen_id) as total, ".
-					"COUNT(DISTINCT IF((unhls_test_results.result='Positive' OR ".
+					"COUNT(DISTINCT IF((unhls_test_results.result='Positive' OR (unhls_test_results.result='Reactive') OR ".
 						"(measure_ranges.alphanumeric = unhls_test_results.result AND measure_ranges.interpretation = 'Positive')),".
 						"unhls_tests.specimen_id,NULL)) positive, ".
 					"COUNT(DISTINCT IF((unhls_test_results.result='Negative' OR ".
+						"(unhls_test_results.result='Non-Reactive') OR".
 						"(measure_ranges.alphanumeric = unhls_test_results.result AND measure_ranges.interpretation = 'Negative')),".
 						"unhls_tests.specimen_id,NULL)) negative, ".
-					"ROUND(COUNT(DISTINCT IF((unhls_test_results.result = 'Positive' OR ".
+					"ROUND(COUNT(DISTINCT IF((unhls_test_results.result = 'Positive' OR (unhls_test_results.result='Reactive') OR ".
 						"(measure_ranges.alphanumeric = unhls_test_results.result AND measure_ranges.interpretation = 'Positive'))".
 						", unhls_tests.specimen_id, NULL))*100/COUNT(DISTINCT unhls_tests.specimen_id ) , 2 ) AS rate"
 					))
@@ -291,7 +292,9 @@ class TestType extends Eloquent
 					$query->where('measure_ranges.alphanumeric', '=', 'Positive')
 							->orWhere('measure_ranges.alphanumeric', '=', 'Negative')
 							->orWhere('measure_ranges.interpretation', '=', 'Positive')
-							->orWhere('measure_ranges.interpretation', '=', 'Negative');
+							->orWhere('measure_ranges.interpretation', '=', 'Negative')
+							->orWhere('measure_ranges.alphanumeric', '=', 'Reactive')
+							->orWhere('measure_ranges.alphanumeric', '=', 'Non-Reactive');
 				});
 			if($ageRange){
 				$data = $data->join('unhls_visits', 'unhls_tests.visit_id', '=', 'unhls_visits.id')
@@ -366,14 +369,14 @@ class TestType extends Eloquent
 	* Check if a certain test type has measures that are either numeric or alphanumeric
 	*
 	*/
-	public function hasAlphaNuMeasure(){
+	public function hasAlphanumericMeasures(){
 		$boolean = TestTypeMeasure::where('test_type_id', $this->id)
 						->join('measures', 'testtype_measures.measure_id', '=', 'measures.id')
 						->where('measure_type_id', Measure::ALPHANUMERIC);
 		return $boolean->count();
 	}
 
-	public function hasNumeric(){
+	public function hasNumericMeasures(){
 		$boolean = TestTypeMeasure::where('test_type_id', $this->id)
 						->join('measures', 'testtype_measures.measure_id', '=', 'measures.id')
 						->where('measure_type_id', Measure::NUMERIC);
@@ -422,10 +425,31 @@ class TestType extends Eloquent
 	}
 
 	public function isCulture(){
-		if($this->name == 'Culture and Sensitivity'){
-			return true;
-		}else {
+		if (!is_null($this->testNameMapping)) {
+			return ($this->testNameMapping->system_name == 'culture_sensitivity') ? true : false ;
+		}else{
 			return false;
 		}
 	}
+
+	public function isGramStain(){
+		if (!is_null($this->testNameMapping)) {
+			return ($this->testNameMapping->system_name == 'gram_stain') ? true : false ;
+		}else{
+			return false;
+		}
+	}
+
+	public function isHIV(){
+		if (!is_null($this->testNameMapping)) {
+			return ($this->testNameMapping->system_name == 'hiv') ? true : false ;
+		}else{
+			return false;
+		}
+	}
+
+    public function testNameMapping()
+    {
+        return $this->hasOne('TestNameMapping');
+    }
 }
