@@ -6,7 +6,7 @@
 <div class="panel-body row">
 	<div class="btn-group container col-md-3">
 
-		<a class="link-tip" href="{{ URL::route('user.dashboard')}}" data-toggle="tooltip" data-placement="bottom" title="Click to view key performance indicators for laboratory performance"> 
+		<a class="link-tip" href="{{ URL::route('dashboard.index')}}" data-toggle="tooltip" data-placement="bottom" title="Click to view key performance indicators for laboratory performance"> 
 			<div class="panel panel-default">
 			<span class="ion-speedometer" style="font-size:80px"></span> <br><span class="nav_title">DASHBOARD</span>
 			</div>

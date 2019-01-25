@@ -105,7 +105,7 @@
 							<h4 class="panel_heading panel_heading_first">Dashboard</h4>
 							<ul>
 								<li>
-									<div><a href="{{ URL::route('user.dashboard')}}">
+									<div><a href="{{ URL::route('dashboard.index')}}">
 										<span class="glyphicon glyphicon-tag"></span>
 										Dashboard</a>
 									</div>
@@ -250,6 +250,10 @@
 								<li>
 									<a href="{{ URL::route("blisclient.index") }}">
 									<span class="glyphicon glyphicon-tag"></span>{{ trans('messages.interfaced-equipment')}}</a>
+								</li>
+								<li>
+									<a href="{{ URL::route("resetulin.create") }}">
+									<span class="glyphicon glyphicon-tag"></span>{{'Reset ULIN' }}</a>
 								</li>
 							</ul>
 						</div>
