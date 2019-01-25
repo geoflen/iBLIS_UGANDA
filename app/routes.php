@@ -45,6 +45,10 @@ Route::group(array("before" => "auth"), function()
         "as" => "user.home",
         "uses" => "UserController@homeAction"
         ));
+    Route::any('/dashboard', array(
+        "as" => "dashboard.index",
+        "uses" => "DashboardController@index"
+        ));
 
     Route::any('/dashboard', array(
         "as" => "user.dashboard",
@@ -377,6 +381,12 @@ Route::group(array("before" => "auth"), function()
             "as"   => "reportconfig.store",
             "uses" => "DailyReportController@store"
         ));
+         Route::any('/newulin', array(
+            "as" => "resetulin.create",
+            "uses" => "UuidGeneratorController@create"));
+        Route::post('/resetulin', array(
+            "as" => "resetulin.reset",
+            "uses" => "UuidGeneratorController@reset"));
     });
 
     //  Check if able to manage reports
