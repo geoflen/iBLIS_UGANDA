@@ -49,11 +49,6 @@ Route::group(array("before" => "auth"), function()
         "as" => "dashboard.index",
         "uses" => "DashboardController@index"
         ));
-
-    Route::any('/dashboard', array(
-        "as" => "user.dashboard",
-        "uses" => "UserController@dashboard"
-        ));
     Route::group(array("before" => "checkPerms:manage_users"), function() {
         Route::resource('user', 'UserController');
         Route::get("/user/{id}/delete", array(
