@@ -262,13 +262,14 @@ class TestType extends Eloquent
 		// TODO: Should be changed to a more flexible format i.e. that supports localization
 		$data =  UnhlsTest::select(DB::raw("test_types.id as id, test_types.name as test, ".
 					"COUNT(DISTINCT unhls_tests.specimen_id) as total, ".
-					"COUNT(DISTINCT IF((unhls_test_results.result='Positive' OR ".
+					"COUNT(DISTINCT IF((unhls_test_results.result='Positive' OR (unhls_test_results.result='Reactive') OR ".
 						"(measure_ranges.alphanumeric = unhls_test_results.result AND measure_ranges.interpretation = 'Positive')),".
 						"unhls_tests.specimen_id,NULL)) positive, ".
 					"COUNT(DISTINCT IF((unhls_test_results.result='Negative' OR ".
+						"(unhls_test_results.result='Non-Reactive') OR".
 						"(measure_ranges.alphanumeric = unhls_test_results.result AND measure_ranges.interpretation = 'Negative')),".
 						"unhls_tests.specimen_id,NULL)) negative, ".
-					"ROUND(COUNT(DISTINCT IF((unhls_test_results.result = 'Positive' OR ".
+					"ROUND(COUNT(DISTINCT IF((unhls_test_results.result = 'Positive' OR (unhls_test_results.result='Reactive') OR ".
 						"(measure_ranges.alphanumeric = unhls_test_results.result AND measure_ranges.interpretation = 'Positive'))".
 						", unhls_tests.specimen_id, NULL))*100/COUNT(DISTINCT unhls_tests.specimen_id ) , 2 ) AS rate"
 					))
@@ -291,7 +292,9 @@ class TestType extends Eloquent
 					$query->where('measure_ranges.alphanumeric', '=', 'Positive')
 							->orWhere('measure_ranges.alphanumeric', '=', 'Negative')
 							->orWhere('measure_ranges.interpretation', '=', 'Positive')
-							->orWhere('measure_ranges.interpretation', '=', 'Negative');
+							->orWhere('measure_ranges.interpretation', '=', 'Negative')
+							->orWhere('measure_ranges.alphanumeric', '=', 'Reactive')
+							->orWhere('measure_ranges.alphanumeric', '=', 'Non-Reactive');
 				});
 			if($ageRange){
 				$data = $data->join('unhls_visits', 'unhls_tests.visit_id', '=', 'unhls_visits.id')
